@@ -24,9 +24,12 @@
 namespace android {
 
 #define SVEP_MAGIC 0x83991906
-#define SVEP_VERSION "Svep-1.1.1"
+#define SVEP_VERSION "Svep-1.1.2"
+#define SVEP_VERSION_NAME "vendor.svep.version"
 
 #define SVEP_MODE_NAME "persist.sys.svep.mode"
+
+#define SVEP_DEBUG_NAME "vendor.svep.log"
 
 #define SVEP_CONTRAST_MODE_ENABLE 1
 #define SVEP_CONTRAST_MODE_LINE_WIDTH 4;
@@ -40,7 +43,6 @@ namespace android {
 #define SVEP_SUBITLE_W 892
 #define SVEP_SUBITLE_H 136
 
-
 #define SVEP_ALOGE(x, ...)  \
     ALOGE("%s,line=%d " x ,__FUNCTION__,__LINE__, ##__VA_ARGS__)
 
@@ -49,6 +51,9 @@ namespace android {
 
 #define SVEP_ALOGI(x, ...)  \
     ALOGI("%s,line=%d " x ,__FUNCTION__,__LINE__, ##__VA_ARGS__)
+
+#define SVEP_ALOGD_IF(x, ...)  \
+    ALOGD_IF(SvepLogLevel(), "%s,line=%d " x ,__FUNCTION__,__LINE__, ##__VA_ARGS__)
 
 #define YUV_ALIGN 2
 #define RGB_ALIGN 1
@@ -61,6 +66,8 @@ namespace android {
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
 
+int UpdateSvepLogLevel();
+bool SvepLogLevel();
 
 enum SvepError {
     None = 0,

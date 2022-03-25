@@ -63,7 +63,7 @@ private:
   int VerifyDstInfo(SvepContext &ctx, const SvepImageInfo &dst);
   // Dump Ctx info
   int DumpCtx(const SvepContext &ctx);
-  bool bInit_;
+  SvepError bInitState_ = SvepError::UnInit;
   SvepVersion mVersion_;
   SvepBackend mSvepBackend_;
   mutable pthread_mutex_t mLock_;

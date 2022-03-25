@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2021 by Rockchip Electronics Co., Ltd. All Rights Reserved.
- * 
- * 
+ *
+ *
  * @Author: Randall Zhuo
  * @Date: 2021-10-20 14:08:09
  * @LastEditors: Randall
@@ -36,7 +36,7 @@ private:
 public:
     VDLSS(int input_width=1280, int input_height=720, int output_width=3840, int output_height=2160);
     ~VDLSS();
-    
+    bool verify();
     int run(VDLSSBUFFERHANDLE inputBufferHandle);
     int postProcess(VDLSSBUFFERHANDLE outputBufferHandle, bool enable_sharpening = true);
 
@@ -45,5 +45,5 @@ public:
 
     VDLSSBUFFERHANDLE createOutputBufferHandle(VDLSSBUFFER &outBuffer);
     int destoryOutputBufferHandle(VDLSSBUFFERHANDLE handle);
-    
+
 };

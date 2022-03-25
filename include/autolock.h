@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-#pragma once
+#ifndef ANDROID_AUTO_LOCK_H_
+#define ANDROID_AUTO_LOCK_H_
 
 #include <pthread.h>
 #include <log/log.h>
@@ -43,3 +44,4 @@ class AutoLock {
   const char *const name_;
 };
 }  // namespace android
+#endif

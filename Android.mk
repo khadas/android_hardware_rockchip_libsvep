@@ -119,13 +119,20 @@ LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libsvep.so
 endif
 include $(BUILD_PREBUILT)
 
-## copy init.qcom.test.rc from etc to /vendor/etc/init/hw
+## copy RKNPU-AI-892x136-RGBA.bin from etc to /vendor/etc/
 include $(CLEAR_VARS)
 LOCAL_MODULE := RKNPU-AI-892x136-RGBA.bin
-LOCAL_MODULE_TAGS  := optional
-LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_PROPRIETARY_MODULE := true
+LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES := res/RKNPU-AI-892x136-RGBA.bin
-LOCAL_MODULE_PATH :=$(PRODUCT_OUT)/vendor/etc/
+include $(BUILD_PREBUILT)
+
+## copy init.qcom.test.rc from etc to /vendor/etc/
+include $(CLEAR_VARS)
+LOCAL_MODULE := svep-env.sh
+LOCAL_PROPRIETARY_MODULE := true
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES := res/svep-env.sh
 include $(BUILD_PREBUILT)
 
 endif
