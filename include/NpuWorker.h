@@ -15,7 +15,7 @@
  */
 #pragma once
 
-#include "VDLSS.h"
+#include "RKSVEP.h"
 #include "GpuWorker.h"
 #include "worker.h"
 #include "Buffer.h"
@@ -49,11 +49,11 @@ class NpuWorker : public Worker {
   int iTimelineFd_;
   int iTimeline_;
   int iCurrentTimeline_;
-  VDLSS *pVDlss360_;
-  VDLSS *pVDlss540_;
-  VDLSS *pVDlss720_;
-  VDLSS *pVDlss1080_;
+  RKSVEP *pVDlss360_;
+  RKSVEP *pVDlss540_;
+  RKSVEP *pVDlss720_;
+  RKSVEP *pVDlss1080_;
   GpuWorker GpuWorker_;
-  std::map<uint64_t, VDLSSBUFFERHANDLE> mapVdlssHandle;
+  std::map<uint64_t, RKSVEPBUFFERHANDLE> mapVdlssHandle;
 };
 } //namespace android

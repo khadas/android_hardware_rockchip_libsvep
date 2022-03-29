@@ -46,6 +46,8 @@ LOCAL_MODULE_STEM := $(LOCAL_MODULE)
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_VENDOR_MODULE := true
 LOCAL_PROPRIETARY_MODULE := true
+LOCAL_SHARED_LIBRARIES := \
+  libGLES_mali
 ifneq ($(strip $(TARGET_2ND_ARCH)), )
 LOCAL_MULTILIB := both
 LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libOpenCL.so
@@ -53,6 +55,16 @@ LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := lib/$(TARGET_2ND_ARCH)/libOpenCL.so
 else
 LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libOpenCL.so
 endif
+
+# Create symlinks.
+LOCAL_POST_INSTALL_CMD := \
+        cd $(TARGET_OUT_VENDOR)/lib64; \
+        ln -sf egl/libGLES_mali.so libOpenCL.so; \
+        cd -; \
+        cd $(TARGET_OUT_VENDOR)/lib; \
+        ln -sf egl/libGLES_mali.so libOpenCL.so; \
+        cd -;
+
 include $(BUILD_PREBUILT)
 
 
@@ -75,7 +87,7 @@ endif
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := librkvdlss
+LOCAL_MODULE := librksvep
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_SUFFIX := .so
@@ -84,10 +96,10 @@ LOCAL_VENDOR_MODULE := true
 LOCAL_PROPRIETARY_MODULE := true
 ifneq ($(strip $(TARGET_2ND_ARCH)), )
 LOCAL_MULTILIB := both
-LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/librkvdlss.so
-LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := lib/$(TARGET_2ND_ARCH)/librkvdlss.so
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/librksvep.so
+LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := lib/$(TARGET_2ND_ARCH)/librksvep.so
 else
-LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/librkvdlss.so
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/librksvep.so
 endif
 include $(BUILD_PREBUILT)
 
@@ -103,13 +115,18 @@ LOCAL_SHARED_LIBRARIES := \
   libsync_vendor \
   librga \
   libOpenCL \
-  librkvdlss \
+  librksvep \
   librknnrt-svep \
   libhidlbase \
   libgralloctypes \
   android.hardware.graphics.mapper@4.0
 
 LOCAL_PROPRIETARY_MODULE := true
+
+LOCAL_REQUIRED_MODULES := \
+	RKNPU-AI-892x136-RGBA.bin \
+	svep-env.sh
+
 ifneq ($(strip $(TARGET_2ND_ARCH)), )
 LOCAL_MULTILIB := both
 LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libsvep.so

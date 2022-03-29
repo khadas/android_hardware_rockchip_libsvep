@@ -24,19 +24,17 @@
 namespace android {
 
 #define SVEP_MAGIC 0x83991906
-#define SVEP_VERSION "Svep-1.1.2"
+#define SVEP_VERSION "Svep-1.1.5"
 #define SVEP_VERSION_NAME "vendor.svep.version"
+#define SVEP_DEBUG_NAME "vendor.svep.log"
 
 #define SVEP_MODE_NAME "persist.sys.svep.mode"
-
-#define SVEP_DEBUG_NAME "vendor.svep.log"
+#define SVEP_CONTRAST_MODE_NAME   "persist.sys.svep.contrast_mode"
+#define SVEP_CONTRAST_MODE_OFFSET "persist.sys.svep.contrast_offset_ratio"
+#define SVEP_AVG_COST_TIME_NAME "vendor.svep.avg_cost_time"
 
 #define SVEP_CONTRAST_MODE_ENABLE 1
 #define SVEP_CONTRAST_MODE_LINE_WIDTH 4;
-#define SVEP_CONTRAST_MODE_NAME   "persist.sys.svep.contrast_mode"
-#define SVEP_CONTRAST_MODE_OFFSET "persist.sys.svep.contrast_offset_ratio"
-
-#define SVEP_AVG_COST_TIME_NAME "vendor.svep.avg_cost_time"
 
 #define SVEP_SUBITLE_ENABLE 1
 #define SVEP_SUBITLE_PATH "/vendor/etc/RKNPU-AI-892x136-RGBA.bin"
@@ -222,6 +220,7 @@ public:
   SvepImageInfo mSvepDst_;
   SvepImageInfo mSrc_;
   SvepImageInfo mDst_;
+  float mEnhancementRate_;
 };
 
 class SvepBackendContext {
@@ -235,6 +234,7 @@ public:
   SvepImageInfo mSrc_;
   SvepImageInfo mDst_;
   int iFenceTimeline_;
+  float mEnhancementRate_;
   UniqueFd ufCurrentFinishFence_;
   struct timeval mStartTime_;
 
@@ -247,7 +247,8 @@ public:
     mSvepDst_(ac.mSvepDst_),
     mSrc_(ac.mSrc_),
     mDst_(ac.mDst_),
-    iFenceTimeline_(0){};
+    iFenceTimeline_(0),
+    mEnhancementRate_(ac.mEnhancementRate_){};
 };
 
 } // namespace android

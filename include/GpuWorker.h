@@ -15,7 +15,7 @@
  */
 #pragma once
 
-#include "VDLSS.h"
+#include "RKSVEP.h"
 #include "worker.h"
 #include "Buffer.h"
 #include "BufferQueue.h"
@@ -32,7 +32,7 @@ class GpuWorker : public Worker {
   GpuWorker();
   ~GpuWorker() override;
 
-  int Init(VDLSS *pVDlss360,VDLSS *pVDlss540, VDLSS *pVDlss720,VDLSS *pVDlss1080, int timeline_fd);
+  int Init(RKSVEP *pVDlss360,RKSVEP *pVDlss540, RKSVEP *pVDlss720,RKSVEP *pVDlss1080, int timeline_fd);
   void Queue(std::shared_ptr<SvepBackendContext> abCtx);
 
   protected:
@@ -51,11 +51,11 @@ class GpuWorker : public Worker {
   int iTimelineFd_;
   int iTimeline_;
   int iCurrentTimeline_;
-  VDLSS *pVDlss360_;
-  VDLSS *pVDlss540_;
-  VDLSS *pVDlss720_;
-  VDLSS *pVDlss1080_;
-  std::map<uint64_t, VDLSSBUFFERHANDLE> mapGpuHandle;
+  RKSVEP *pVDlss360_;
+  RKSVEP *pVDlss540_;
+  RKSVEP *pVDlss720_;
+  RKSVEP *pVDlss1080_;
+  std::map<uint64_t, RKSVEPBUFFERHANDLE> mapGpuHandle;
 
   bool subtitleEnable_;
   sp<GraphicBuffer> ptrSubtitleBuffer_;

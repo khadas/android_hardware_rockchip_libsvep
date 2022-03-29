@@ -15,7 +15,7 @@
  */
 #pragma once
 
-#include "VDLSS.h"
+#include "RKSVEP.h"
 #include "SvepType.h"
 #include "Buffer.h"
 #include "BufferQueue.h"

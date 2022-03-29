@@ -35,6 +35,8 @@ public:
   int GetDstRequireInfo(SvepContext &ctx, SvepImageInfo &require);
   // Set dst-image info
   int SetDstImage(SvepContext &ctx, const SvepImageInfo &dst);
+  // Set Enhancement rate
+  int SetEnhancementRate(SvepContext &ctx, int rate);
   // Run and get FinishFence
   int Run(const SvepContext &ctx);
   // Run and get FinishFence
