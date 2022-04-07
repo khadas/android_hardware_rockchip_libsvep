@@ -32,7 +32,7 @@ class GpuWorker : public Worker {
   GpuWorker();
   ~GpuWorker() override;
 
-  int Init(RKSVEP *pVDlss360,RKSVEP *pVDlss540, RKSVEP *pVDlss720,RKSVEP *pVDlss1080, int timeline_fd);
+  int Init(RKSVEP *pVDlss360, RKSVEP *pVDlss540, RKSVEP *pVDlss720, RKSVEP *pVDlss1080, RKSVEP *pVDlss2160, int timeline_fd);
   void Queue(std::shared_ptr<SvepBackendContext> abCtx);
 
   protected:
@@ -55,6 +55,7 @@ class GpuWorker : public Worker {
   RKSVEP *pVDlss540_;
   RKSVEP *pVDlss720_;
   RKSVEP *pVDlss1080_;
+  RKSVEP *pVDlss2160_;
   std::map<uint64_t, RKSVEPBUFFERHANDLE> mapGpuHandle;
 
   bool subtitleEnable_;

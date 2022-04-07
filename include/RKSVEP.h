@@ -5,7 +5,7 @@
  * @Author: Randall Zhuo
  * @Date: 2021-10-20 14:08:09
  * @LastEditors: Randall
- * @LastEditTime: 2022-03-29 09:03:25
+ * @LastEditTime: 2022-04-02 14:58:01
  * @Description: TODO
  */
 
@@ -34,7 +34,7 @@ private:
     /* data */
    int init();
 public:
-    RKSVEP(int input_width=1280, int input_height=720, int output_width=3840, int output_height=2160);
+    RKSVEP(int input_width=1280, int input_height=720, int output_width=3840, int output_height=2160, bool enable_enhancement_olny = false);
     ~RKSVEP();
     bool verify();
     int run(RKSVEPBUFFERHANDLE inputBufferHandle);
@@ -45,5 +45,10 @@ public:
 
     RKSVEPBUFFERHANDLE createOutputBufferHandle(RKSVEPBUFFER &outBuffer);
     int destoryOutputBufferHandle(RKSVEPBUFFERHANDLE handle);
+
+    // enhancement only
+    RKSVEPBUFFERHANDLE createEnhancementBufferHandle(RKSVEPBUFFER &inputBuffer, RKSVEPBUFFER &outBuffer);
+    int destoryEnhancementBufferHandle(RKSVEPBUFFERHANDLE handle);
+    int run_enhancement(RKSVEPBUFFERHANDLE handle, float enhancementRate = 0.5f);
 
 };

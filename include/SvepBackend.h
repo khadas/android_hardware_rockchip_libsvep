@@ -48,6 +48,7 @@ private:
   std::shared_ptr<BufferQueue> mPtrBQ540p_;
   std::shared_ptr<BufferQueue> mPtrBQ720p_;
   std::shared_ptr<BufferQueue> mPtrBQ1080p_;
+  std::shared_ptr<BufferQueue> mPtrBQ2160p_;
   std::shared_ptr<Buffer> mSubtitleBuffer_;
   NpuWorker NpuWorker_;
 };

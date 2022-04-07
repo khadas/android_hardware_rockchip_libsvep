@@ -53,6 +53,7 @@ class NpuWorker : public Worker {
   RKSVEP *pVDlss540_;
   RKSVEP *pVDlss720_;
   RKSVEP *pVDlss1080_;
+  RKSVEP *pVDlss2160_;
   GpuWorker GpuWorker_;
   std::map<uint64_t, RKSVEPBUFFERHANDLE> mapVdlssHandle;
 };

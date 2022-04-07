@@ -24,7 +24,7 @@
 namespace android {
 
 #define SVEP_MAGIC 0x83991906
-#define SVEP_VERSION "Svep-1.1.5"
+#define SVEP_VERSION "Svep-1.1.6"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 #define SVEP_DEBUG_NAME "vendor.svep.log"
 
@@ -91,14 +91,12 @@ enum SvepMode {
     SVEP_540p,
     SVEP_720p,
     SVEP_1080p,
+    SVEP_2160p,
 };
 
-enum SvepFeatureFunction {
+enum SvepBufferMask {
     NONE = 0,
-    SVEP_SUBTITLE_TIPS = 1 << 1,
-    SVEP_AUTO_SLIDE    = 1 << 2,
-    SVEP_CUSTOM_SLIDE  = 1 << 3,
-
+    SVEP_AFBC_FORMATE = 1 << 1
 };
 
 struct SvepVersion{
@@ -157,6 +155,7 @@ public:
   int iStride_;
   uint64_t uBufferId_;
   uint64_t uDataSpace_;
+  uint64_t uBufferMask_;
 
   SvepBufferInfo() = default;
   SvepBufferInfo(const SvepBufferInfo& rhs){
@@ -167,6 +166,8 @@ public:
     iStride_ = rhs.iStride_;
     uBufferId_ = rhs.uBufferId_;
     uDataSpace_ =  rhs.uDataSpace_;
+    uBufferMask_ =  rhs.uBufferMask_;
+
   };
 
   SvepBufferInfo& operator=(const SvepBufferInfo& rhs){
@@ -177,6 +178,7 @@ public:
     iStride_ = rhs.iStride_;
     uBufferId_ = rhs.uBufferId_;
     uDataSpace_ =  rhs.uDataSpace_;
+    uBufferMask_ =  rhs.uBufferMask_;
     return *this;
   };
 
