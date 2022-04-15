@@ -42,7 +42,9 @@ class NpuWorker : public Worker {
   // int WaitAllFence(std::shared_ptr<SvepBackendContext> abCtx);
   // int SignalFinishFence(std::shared_ptr<SvepBackendContext> abCtx);
   int SvepRun(std::shared_ptr<SvepBackendContext> abCtx);
-
+  int ContrastMode(std::shared_ptr<SvepBackendContext> abCtx);
+  int InitSubtitle();
+  int OsdSubtitle(std::shared_ptr<SvepBackendContext> abCtx);
   private:
   std::queue<std::shared_ptr<SvepBackendContext>> abCtxQueue_;
   char cFenceName_[50];
@@ -54,6 +56,14 @@ class NpuWorker : public Worker {
   RKSVEP *pVDlss720_;
   RKSVEP *pVDlss1080_;
   RKSVEP *pVDlss2160_;
+
+  bool subtitleEnable_;
+  sp<GraphicBuffer> ptrSubtitleBuffer_;
+  int subtitleFd_;
+  int subtitleW_;
+  int subtitleH_;
+  int subtitleS_;
+
   GpuWorker GpuWorker_;
   std::map<uint64_t, RKSVEPBUFFERHANDLE> mapVdlssHandle;
 };

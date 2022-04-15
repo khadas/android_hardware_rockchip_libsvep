@@ -32,7 +32,12 @@ class GpuWorker : public Worker {
   GpuWorker();
   ~GpuWorker() override;
 
-  int Init(RKSVEP *pVDlss360, RKSVEP *pVDlss540, RKSVEP *pVDlss720, RKSVEP *pVDlss1080, RKSVEP *pVDlss2160, int timeline_fd);
+  int Init(RKSVEP *pVDlss360,
+           RKSVEP *pVDlss540,
+           RKSVEP *pVDlss720,
+           RKSVEP *pVDlss1080,
+           RKSVEP *pVDlss2160,
+           int timeline_fd);
   void Queue(std::shared_ptr<SvepBackendContext> abCtx);
 
   protected:
@@ -41,6 +46,7 @@ class GpuWorker : public Worker {
   // int WaitAllFence(std::shared_ptr<SvepBackendContext> abCtx);
   int SignalFinishFence(std::shared_ptr<SvepBackendContext> abCtx);
   int GpuRun(std::shared_ptr<SvepBackendContext> abCtx);
+  int ScaleTo8k(std::shared_ptr<SvepBackendContext> abCtx);
   // Osd "RKNPU AI Video Enhancement" Subtitle
   int OsdSubtitle(std::shared_ptr<SvepBackendContext> abCtx);
   int ContrastMode(std::shared_ptr<SvepBackendContext> abCtx);

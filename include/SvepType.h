@@ -24,7 +24,7 @@
 namespace android {
 
 #define SVEP_MAGIC 0x83991906
-#define SVEP_VERSION "Svep-1.1.6"
+#define SVEP_VERSION "Svep-1.2.1"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 #define SVEP_DEBUG_NAME "vendor.svep.log"
 
@@ -60,8 +60,9 @@ namespace android {
 #ifndef ALIGN
 #define ALIGN( value, base ) (((value) + ((base) - 1)) & ~((base) - 1))
 #endif
-#define ALIGN_DOWN( value, base)	(value & (~(base-1)) )
-
+#ifndef ALIGN_DOWN
+#define ALIGN_DOWN( value, base)	(value & (~(base-1)))
+#endif
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
 
 int UpdateSvepLogLevel();
@@ -92,10 +93,16 @@ enum SvepMode {
     SVEP_720p,
     SVEP_1080p,
     SVEP_2160p,
+    SVEP_4320p,
+};
+
+enum SvepModeUsage {
+    SVEP_MODE_NONE = 0,
+    SVEP_OUTPUT_8K_MODE = 1 << 1,
 };
 
 enum SvepBufferMask {
-    NONE = 0,
+    SVEP_BUFFER_NONE = 0,
     SVEP_AFBC_FORMATE = 1 << 1
 };
 
@@ -110,7 +117,7 @@ struct SvepModeRequireInfo{
   int iSvepSrcWidth_;
   int iSvepSrcHeight_;
   int iSvepSrcFormat_;
-  int iSvepScale_;
+  float iSvepScale_;
   int iSvepDstFormat_;
   char cName[20];
 };

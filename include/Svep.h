@@ -30,7 +30,9 @@ public:
   // Init Context info
   int InitCtx(SvepContext &ctx);
   // Set src-image info
-  int SetSrcImage(SvepContext &ctx, const SvepImageInfo &src);
+  int SetSrcImage(SvepContext &ctx,
+                  const SvepImageInfo &src,
+                  SvepModeUsage usage = SVEP_MODE_NONE);
   // Get dst-image require info
   int GetDstRequireInfo(SvepContext &ctx, SvepImageInfo &require);
   // Set dst-image info
@@ -56,7 +58,9 @@ private:
   // Verify dlss context
   int VerifyCtx(const SvepContext &ctx, const SvepStage stage);
   // Verify src info and get suitable svep mode.
-  SvepMode VerifyMode(SvepContext &ctx, const SvepImageInfo &src);
+  SvepMode VerifyMode(SvepContext &ctx,
+                      const SvepImageInfo &src,
+                      SvepModeUsage usage);
   // Verify src info
   int VerifySrcInfo(SvepContext &ctx, const SvepImageInfo &src);
   // Verity src info and svep mode whether the RGA requirements are met
