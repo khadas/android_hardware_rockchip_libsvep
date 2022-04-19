@@ -144,11 +144,11 @@ LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES := res/RKNPU-AI-892x136-RGBA.bin
 include $(BUILD_PREBUILT)
 
-## copy init.qcom.test.rc from etc to /vendor/etc/
+## copy init.qcom.test.rc from etc to /vendor/bin/
 include $(CLEAR_VARS)
 LOCAL_MODULE := svep-env.sh
 LOCAL_PROPRIETARY_MODULE := true
-LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_SRC_FILES := res/svep-env.sh
 include $(BUILD_PREBUILT)
 
