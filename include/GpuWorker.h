@@ -46,6 +46,8 @@ class GpuWorker : public Worker {
   // int WaitAllFence(std::shared_ptr<SvepBackendContext> abCtx);
   int SignalFinishFence(std::shared_ptr<SvepBackendContext> abCtx);
   int GpuRun(std::shared_ptr<SvepBackendContext> abCtx);
+  RKSVEPBUFFERHANDLE SvepImportBuffer(std::shared_ptr<SvepBackendContext> abCtx);
+  int SvepReleaseBuffer(std::shared_ptr<SvepBackendContext> abCtx);
   int ScaleTo8k(std::shared_ptr<SvepBackendContext> abCtx);
   // Osd "RKNPU AI Video Enhancement" Subtitle
   int OsdSubtitle(std::shared_ptr<SvepBackendContext> abCtx);
@@ -74,5 +76,7 @@ class GpuWorker : public Worker {
   long totalTime_;
   long lastAvgCostTime_;
   long avgCnt_;
+
+  SvepMode mLastMode_ = UN_SUPPORT;
 };
 } //namespace android

@@ -46,11 +46,7 @@ private:
   int QueueSvepDstBuffer(std::shared_ptr<SvepBackendContext> abCtx, const std::shared_ptr<Buffer> buffer);
   int ConvertToRgb888(const SvepImageInfo &srcBuffer, std::shared_ptr<Buffer> dstBuffer);
   bool mInit_;
-  std::shared_ptr<BufferQueue> mPtrBQ360p_;
-  std::shared_ptr<BufferQueue> mPtrBQ540p_;
-  std::shared_ptr<BufferQueue> mPtrBQ720p_;
-  std::shared_ptr<BufferQueue> mPtrBQ1080p_;
-  std::shared_ptr<BufferQueue> mPtrBQ2160p_;
+  std::shared_ptr<BufferQueue> mPtrBufferQueue_;
   std::shared_ptr<BufferQueue> mPtrBQ4320p_;
   std::shared_ptr<Buffer> mSubtitleBuffer_;
   NpuWorker NpuWorker_;

@@ -42,6 +42,8 @@ class NpuWorker : public Worker {
   // int WaitAllFence(std::shared_ptr<SvepBackendContext> abCtx);
   // int SignalFinishFence(std::shared_ptr<SvepBackendContext> abCtx);
   int SvepRun(std::shared_ptr<SvepBackendContext> abCtx);
+  RKSVEPBUFFERHANDLE SvepImportBuffer(std::shared_ptr<SvepBackendContext> abCtx);
+  int SvepReleaseBuffer(std::shared_ptr<SvepBackendContext> abCtx);
   int ContrastMode(std::shared_ptr<SvepBackendContext> abCtx);
   int InitSubtitle();
   int OsdSubtitle(std::shared_ptr<SvepBackendContext> abCtx);
@@ -65,6 +67,7 @@ class NpuWorker : public Worker {
   int subtitleS_;
 
   GpuWorker GpuWorker_;
-  std::map<uint64_t, RKSVEPBUFFERHANDLE> mapVdlssHandle;
+  std::map<uint64_t, RKSVEPBUFFERHANDLE> mapVdlssHandles_;
+  SvepMode mLastMode_ = UN_SUPPORT;
 };
 } //namespace android

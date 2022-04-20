@@ -24,7 +24,7 @@
 namespace android {
 
 #define SVEP_MAGIC 0x83991906
-#define SVEP_VERSION "Svep-1.2.2"
+#define SVEP_VERSION "Svep-1.2.4"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 #define SVEP_DEBUG_NAME "vendor.svep.log"
 
@@ -160,6 +160,7 @@ public:
   int iHeight_;
   int iFormat_;
   int iStride_;
+  int iSize_;
   uint64_t uBufferId_;
   uint64_t uDataSpace_;
   uint64_t uBufferMask_;
@@ -171,9 +172,10 @@ public:
     iHeight_ = rhs.iHeight_;
     iFormat_ = rhs.iFormat_;
     iStride_ = rhs.iStride_;
-    uBufferId_ = rhs.uBufferId_;
-    uDataSpace_ =  rhs.uDataSpace_;
-    uBufferMask_ =  rhs.uBufferMask_;
+    iSize_   = rhs.iSize_;
+    uBufferId_   = rhs.uBufferId_;
+    uDataSpace_  = rhs.uDataSpace_;
+    uBufferMask_ = rhs.uBufferMask_;
 
   };
 
@@ -183,17 +185,19 @@ public:
     iHeight_ = rhs.iHeight_;
     iFormat_ = rhs.iFormat_;
     iStride_ = rhs.iStride_;
-    uBufferId_ = rhs.uBufferId_;
-    uDataSpace_ =  rhs.uDataSpace_;
-    uBufferMask_ =  rhs.uBufferMask_;
+    iSize_   = rhs.iSize_;
+    uBufferId_   = rhs.uBufferId_;
+    uDataSpace_  = rhs.uDataSpace_;
+    uBufferMask_ = rhs.uBufferMask_;
     return *this;
   };
 
   bool isValid() const {
-    return iFd_ > 0 &&
-           iWidth_ > 0 &&
+    return iFd_ > 0     &&
+           iWidth_ > 0  &&
            iHeight_ > 0 &&
            iStride_ > 0 &&
+           iSize_ > 0   &&
            iFormat_ > 0;
   }
 };
