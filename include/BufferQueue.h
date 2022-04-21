@@ -34,6 +34,7 @@ public:
 
   std::shared_ptr<Buffer> DequeueBuffer(int w, int h, int format, std::string name);
   int QueueBuffer(const std::shared_ptr<Buffer> buffer);
+  int ReleaseBuffer();
 
 private:
   std::string sName_;

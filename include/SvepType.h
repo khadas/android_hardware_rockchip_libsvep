@@ -24,7 +24,7 @@
 namespace android {
 
 #define SVEP_MAGIC 0x83991906
-#define SVEP_VERSION "Svep-1.2.4"
+#define SVEP_VERSION "Svep-1.2.5"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 #define SVEP_DEBUG_NAME "vendor.svep.log"
 
