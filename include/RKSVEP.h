@@ -5,7 +5,7 @@
  * @Author: Randall Zhuo
  * @Date: 2021-10-20 14:08:09
  * @LastEditors: Randall
- * @LastEditTime: 2022-04-02 14:58:01
+ * @LastEditTime: 2022-04-28 10:38:57
  * @Description: TODO
  */
 
@@ -24,6 +24,14 @@ public:
     int stride;
     int size;
     int fmt;
+    void* virt_addr;
+};
+
+class RKSVEPMemManager
+{
+public:
+    static RKSVEPBUFFER createNPUFTMem();
+    static void releaseNPUFTMem(RKSVEPBUFFER &buffer);
 };
 
 class RKSVEP
@@ -34,7 +42,8 @@ private:
     /* data */
    int init();
 public:
-    RKSVEP(int input_width=1280, int input_height=720, int output_width=3840, int output_height=2160, bool enable_enhancement_olny = false);
+    RKSVEP(int input_width, int input_height, int output_width, int output_height, bool enable_enhancement_olny = false);
+    RKSVEP(int input_width, int input_height, int output_width, int output_height, RKSVEPBUFFER npuInerBuffer, bool enable_enhancement_olny = false);
     ~RKSVEP();
     bool verify();
     int run(RKSVEPBUFFERHANDLE inputBufferHandle);

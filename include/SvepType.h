@@ -20,26 +20,28 @@
 #include <utils/Trace.h>
 #include <cutils/properties.h>
 #include <time.h>
-
+#include <vector>
+#include <utils/String8.h>
 namespace android {
 
-#define SVEP_MAGIC 0x83991906
-#define SVEP_VERSION "Svep-1.2.5"
+#define SVEP_MAGIC        0x83991906
+#define SVEP_VERSION      "Svep-1.3.1"
 #define SVEP_VERSION_NAME "vendor.svep.version"
-#define SVEP_DEBUG_NAME "vendor.svep.log"
+#define SVEP_DEBUG_NAME   "vendor.svep.log"
 
-#define SVEP_MODE_NAME "persist.sys.svep.mode"
-#define SVEP_CONTRAST_MODE_NAME   "persist.sys.svep.contrast_mode"
-#define SVEP_CONTRAST_MODE_OFFSET "persist.sys.svep.contrast_offset_ratio"
-#define SVEP_AVG_COST_TIME_NAME "vendor.svep.avg_cost_time"
+#define SVEP_MODE_NAME               "persist.sys.svep.mode"
+#define SVEP_ENHANCEMENT_RATE_NAME   "persist.sys.svep.enhancement_rate"
+#define SVEP_CONTRAST_MODE_NAME      "persist.sys.svep.contrast_mode"
+#define SVEP_CONTRAST_MODE_OFFSET    "persist.sys.svep.contrast_offset_ratio"
+#define SVEP_AVG_COST_TIME_NAME      "vendor.svep.avg_cost_time"
 
-#define SVEP_CONTRAST_MODE_ENABLE 1
+#define SVEP_CONTRAST_MODE_ENABLE     1
 #define SVEP_CONTRAST_MODE_LINE_WIDTH 4;
 
 #define SVEP_SUBITLE_ENABLE 1
-#define SVEP_SUBITLE_PATH "/vendor/etc/RKNPU-AI-892x136-RGBA.bin"
-#define SVEP_SUBITLE_W 892
-#define SVEP_SUBITLE_H 136
+#define SVEP_SUBITLE_PATH   "/vendor/etc/RKNPU-AI-892x136-RGBA.bin"
+#define SVEP_SUBITLE_W      892
+#define SVEP_SUBITLE_H      136
 
 #define SVEP_ALOGE(x, ...)  \
     ALOGE("%s,line=%d " x ,__FUNCTION__,__LINE__, ##__VA_ARGS__)
@@ -67,6 +69,8 @@ namespace android {
 
 int UpdateSvepLogLevel();
 bool SvepLogLevel();
+void EnableTimeStampUs();
+long GetCurrentTimeUs();
 
 enum SvepError {
     None = 0,
@@ -236,6 +240,37 @@ public:
   float mEnhancementRate_;
 };
 
+class TimeStamp{
+public:
+  TimeStamp(long time, const char* name){
+    mTime_ = time;
+    mName_ = name;
+  };
+
+  ~TimeStamp(){};
+  long mTime_;
+  String8 mName_;
+
+};
+
+#define RECORD_CURRENT_TIME(stage_name) \
+  abCtx->mTimeStampVec_.push_back(TimeStamp(GetCurrentTimeUs(), stage_name))
+
+#define PRINT_TIME_STAMP() \
+  if(abCtx->mTimeStampVec_.size() > 0){ \
+    long last_time = 0; \
+    String8 output; \
+    for(auto &time : abCtx->mTimeStampVec_){ \
+      if(strcmp(time.mName_.c_str(),"Start")){ \
+        output.appendFormat("%s:%ld ", time.mName_.c_str(), time.mTime_ - last_time); \
+      }else{ \
+        output.appendFormat("%s:%d ", time.mName_.c_str(), 0); \
+      } \
+      last_time = time.mTime_; \
+    } \
+    SVEP_ALOGI("SvepTimeStamp(us): %s", output.c_str()); \
+  }
+
 class SvepBackendContext {
 public:
   int mMagic_;
@@ -250,6 +285,7 @@ public:
   float mEnhancementRate_;
   UniqueFd ufCurrentFinishFence_;
   struct timeval mStartTime_;
+  std::vector<TimeStamp> mTimeStampVec_;
 
   SvepBackendContext(const SvepContext ac):
     mMagic_(ac.mMagic_),

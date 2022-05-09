@@ -44,6 +44,7 @@ class NpuWorker : public Worker {
   int SvepRun(std::shared_ptr<SvepBackendContext> abCtx);
   RKSVEPBUFFERHANDLE SvepImportBuffer(std::shared_ptr<SvepBackendContext> abCtx);
   int SvepReleaseBuffer(std::shared_ptr<SvepBackendContext> abCtx);
+  int Run(std::shared_ptr<SvepBackendContext> abCtx, RKSVEPBUFFERHANDLE bufferHandle);
   int ContrastMode(std::shared_ptr<SvepBackendContext> abCtx);
   int InitSubtitle();
   int OsdSubtitle(std::shared_ptr<SvepBackendContext> abCtx);
@@ -69,5 +70,6 @@ class NpuWorker : public Worker {
   GpuWorker GpuWorker_;
   std::map<uint64_t, RKSVEPBUFFERHANDLE> mapVdlssHandles_;
   SvepMode mLastMode_ = UN_SUPPORT;
+  RKSVEPBUFFER npuInitBuffer_;
 };
 } //namespace android

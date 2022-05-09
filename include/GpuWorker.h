@@ -48,6 +48,7 @@ class GpuWorker : public Worker {
   int GpuRun(std::shared_ptr<SvepBackendContext> abCtx);
   RKSVEPBUFFERHANDLE SvepImportBuffer(std::shared_ptr<SvepBackendContext> abCtx);
   int SvepReleaseBuffer(std::shared_ptr<SvepBackendContext> abCtx);
+  int Run(std::shared_ptr<SvepBackendContext> abCtx, RKSVEPBUFFERHANDLE bufferHandle);
   int ScaleTo8k(std::shared_ptr<SvepBackendContext> abCtx);
   // Osd "RKNPU AI Video Enhancement" Subtitle
   int OsdSubtitle(std::shared_ptr<SvepBackendContext> abCtx);
