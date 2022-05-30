@@ -20,6 +20,7 @@
 #include "Buffer.h"
 #include "BufferQueue.h"
 #include "SvepType.h"
+#include "Osd.h"
 
 #include <map>
 #include <queue>
@@ -42,12 +43,13 @@ class GpuWorker : public Worker {
 
   protected:
   void Routine() override;
-  int InitSubtitle();
   // int WaitAllFence(std::shared_ptr<SvepBackendContext> abCtx);
   int SignalFinishFence(std::shared_ptr<SvepBackendContext> abCtx);
   int GpuRun(std::shared_ptr<SvepBackendContext> abCtx);
   RKSVEPBUFFERHANDLE SvepImportBuffer(std::shared_ptr<SvepBackendContext> abCtx);
   int SvepReleaseBuffer(std::shared_ptr<SvepBackendContext> abCtx);
+  // SvepOsd
+  int SvepUpdateOsd(std::shared_ptr<SvepBackendContext> abCtx);
   int Run(std::shared_ptr<SvepBackendContext> abCtx, RKSVEPBUFFERHANDLE bufferHandle);
   int ScaleTo8k(std::shared_ptr<SvepBackendContext> abCtx);
   // Osd "RKNPU AI Video Enhancement" Subtitle
@@ -67,12 +69,8 @@ class GpuWorker : public Worker {
   RKSVEP *pVDlss2160_;
   std::map<uint64_t, RKSVEPBUFFERHANDLE> mapGpuHandle;
 
-  bool subtitleEnable_;
-  sp<GraphicBuffer> ptrSubtitleBuffer_;
-  int subtitleFd_;
-  int subtitleW_;
-  int subtitleH_;
-  int subtitleS_;
+
+  SvepOsd *svepOsd_;
 
   long totalTime_;
   long lastAvgCostTime_;

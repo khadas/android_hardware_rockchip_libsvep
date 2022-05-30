@@ -29,11 +29,12 @@
 namespace android {
 
 class NpuWorker : public Worker {
-  public:
+public:
   NpuWorker();
   ~NpuWorker() override;
 
-  int Init();
+  SvepError Init(bool async);
+  int InitResource();
   void Queue(std::shared_ptr<SvepBackendContext> abCtx);
 
 
@@ -44,11 +45,15 @@ class NpuWorker : public Worker {
   int SvepRun(std::shared_ptr<SvepBackendContext> abCtx);
   RKSVEPBUFFERHANDLE SvepImportBuffer(std::shared_ptr<SvepBackendContext> abCtx);
   int SvepReleaseBuffer(std::shared_ptr<SvepBackendContext> abCtx);
+  // SvepOsd
+  int SvepUpdateOsd(std::shared_ptr<SvepBackendContext> abCtx);
   int Run(std::shared_ptr<SvepBackendContext> abCtx, RKSVEPBUFFERHANDLE bufferHandle);
   int ContrastMode(std::shared_ptr<SvepBackendContext> abCtx);
   int InitSubtitle();
   int OsdSubtitle(std::shared_ptr<SvepBackendContext> abCtx);
-  private:
+private:
+  bool mInitSucess_;
+  bool mInitAsync_;
   std::queue<std::shared_ptr<SvepBackendContext>> abCtxQueue_;
   char cFenceName_[50];
   int iTimelineFd_;
@@ -60,16 +65,10 @@ class NpuWorker : public Worker {
   RKSVEP *pVDlss1080_;
   RKSVEP *pVDlss2160_;
 
-  bool subtitleEnable_;
-  sp<GraphicBuffer> ptrSubtitleBuffer_;
-  int subtitleFd_;
-  int subtitleW_;
-  int subtitleH_;
-  int subtitleS_;
-
   GpuWorker GpuWorker_;
   std::map<uint64_t, RKSVEPBUFFERHANDLE> mapVdlssHandles_;
   SvepMode mLastMode_ = UN_SUPPORT;
   RKSVEPBUFFER npuInitBuffer_;
+  SvepOsd *svepOsd_;
 };
 } //namespace android

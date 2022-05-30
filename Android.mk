@@ -67,7 +67,6 @@ LOCAL_POST_INSTALL_CMD := \
 
 include $(BUILD_PREBUILT)
 
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := librknnrt-svep
 LOCAL_MODULE_TAGS := optional
@@ -104,6 +103,92 @@ endif
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := libfreetype-svep
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := STATIC_LIBRARIES
+LOCAL_MODULE_SUFFIX := .a
+LOCAL_SHARED_LIBRARIES := libc libdl libm  liblog libz
+LOCAL_VENDOR_MODULE := true
+LOCAL_PROPRIETARY_MODULE := true
+ifneq ($(strip $(TARGET_2ND_ARCH)), )
+LOCAL_MULTILIB := both
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libfreetype.a
+LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := lib/$(TARGET_2ND_ARCH)/libfreetype.a
+else
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libfreetype.a
+endif
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libcrypto-svep
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := STATIC_LIBRARIES
+LOCAL_MODULE_SUFFIX := .a
+LOCAL_SHARED_LIBRARIES := libc libdl libm  liblog libz
+LOCAL_VENDOR_MODULE := true
+LOCAL_PROPRIETARY_MODULE := true
+ifneq ($(strip $(TARGET_2ND_ARCH)), )
+LOCAL_MULTILIB := both
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libcrypto.a
+LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := lib/$(TARGET_2ND_ARCH)/libcrypto.a
+else
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libcrypto.a
+endif
+include $(BUILD_PREBUILT)
+
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libcurl-svep
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := STATIC_LIBRARIES
+LOCAL_MODULE_SUFFIX := .a
+LOCAL_SHARED_LIBRARIES := libc libdl libm  liblog libz
+LOCAL_VENDOR_MODULE := true
+LOCAL_PROPRIETARY_MODULE := true
+ifneq ($(strip $(TARGET_2ND_ARCH)), )
+LOCAL_MULTILIB := both
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libcurl.a
+LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := lib/$(TARGET_2ND_ARCH)/libcurl.a
+else
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libcurl.a
+endif
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := librkauth-svep
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := STATIC_LIBRARIES
+LOCAL_MODULE_SUFFIX := .a
+LOCAL_SHARED_LIBRARIES := libc libdl libm  liblog libz
+LOCAL_VENDOR_MODULE := true
+LOCAL_PROPRIETARY_MODULE := true
+ifneq ($(strip $(TARGET_2ND_ARCH)), )
+LOCAL_MULTILIB := both
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/librkauth.a
+LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := lib/$(TARGET_2ND_ARCH)/librkauth.a
+else
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/librkauth.a
+endif
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libssl-svep
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := STATIC_LIBRARIES
+LOCAL_MODULE_SUFFIX := .a
+LOCAL_SHARED_LIBRARIES := libc libdl libm  liblog libz
+LOCAL_VENDOR_MODULE := true
+LOCAL_PROPRIETARY_MODULE := true
+ifneq ($(strip $(TARGET_2ND_ARCH)), )
+LOCAL_MULTILIB := both
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libssl.a
+LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := lib/$(TARGET_2ND_ARCH)/libssl.a
+else
+LOCAL_SRC_FILES_$(TARGET_ARCH) := lib/$(TARGET_ARCH)/libssl.a
+endif
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := libsvep
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_SUFFIX := .so
@@ -119,12 +204,22 @@ LOCAL_SHARED_LIBRARIES := \
   librknnrt-svep \
   libhidlbase \
   libgralloctypes \
-  android.hardware.graphics.mapper@4.0
+  android.hardware.graphics.mapper@4.0 \
+	libz
+
+
+LOCAL_STATIC_LIBRARIES := \
+  libssl-svep \
+  libcurl-svep \
+	librkauth-svep \
+	libcrypto-svep \
+	libfreetype-svep
+
 
 LOCAL_PROPRIETARY_MODULE := true
 
 LOCAL_REQUIRED_MODULES := \
-	RKNPU-AI-892x136-RGBA.bin \
+	SvepOsd.ttf \
 	svep-env.sh
 
 ifneq ($(strip $(TARGET_2ND_ARCH)), )
@@ -138,10 +233,10 @@ include $(BUILD_PREBUILT)
 
 ## copy RKNPU-AI-892x136-RGBA.bin from etc to /vendor/etc/
 include $(CLEAR_VARS)
-LOCAL_MODULE := RKNPU-AI-892x136-RGBA.bin
+LOCAL_MODULE := SvepOsd.ttf
 LOCAL_PROPRIETARY_MODULE := true
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES := res/RKNPU-AI-892x136-RGBA.bin
+LOCAL_SRC_FILES := res/SvepOsd.ttf
 include $(BUILD_PREBUILT)
 
 ## copy init.qcom.test.rc from etc to /vendor/bin/

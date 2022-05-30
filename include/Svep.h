@@ -22,7 +22,7 @@
 namespace android {
 class Svep {
 public:
-  static Svep* Get() { return GetInstance(); }
+  static Svep* Get(bool async = false) { return GetInstance(async); }
   ~Svep();
   Svep(const Svep&)=delete;
   Svep& operator=(const Svep&)=delete;
@@ -39,6 +39,8 @@ public:
   int SetDstImage(SvepContext &ctx, const SvepImageInfo &dst);
   // Set Enhancement rate
   int SetEnhancementRate(SvepContext &ctx, int rate);
+  // Set OsdMode enbale/disable
+  int SetOsdMode(SvepContext &ctx, SvepOsdMode mode, const wchar_t* osdStr);
   // Run and get FinishFence
   int Run(const SvepContext &ctx);
   // Run and get FinishFence
@@ -46,10 +48,10 @@ public:
 
 private:
   Svep();
-  int Init();
-  static Svep* GetInstance(){
+  int Init(bool async);
+  static Svep* GetInstance(bool async){
     static Svep svep;
-    if(svep.Init())
+    if(svep.Init(async))
       return NULL;
     else
       return &svep;

@@ -22,6 +22,7 @@
 
 #include "NpuWorker.h"
 #include "GpuWorker.h"
+#include "AuthorWorker.h"
 
 #include <map>
 #include <queue>
@@ -34,7 +35,7 @@ class SvepBackend {
 public:
   SvepBackend();
   ~SvepBackend();
-  int Init();
+  SvepError Init(bool async);
 
   int QueueCtxAndRun(const SvepContext &ctx);
   int QueueCtxAndRunAsync(const SvepContext &ctx, int *outFence);
@@ -45,11 +46,14 @@ private:
   std::shared_ptr<Buffer> DequeueSvepDstBuffer(std::shared_ptr<SvepBackendContext> ctx);
   int QueueSvepDstBuffer(std::shared_ptr<SvepBackendContext> abCtx, const std::shared_ptr<Buffer> buffer);
   int ConvertToRgb888(const SvepImageInfo &srcBuffer, std::shared_ptr<Buffer> dstBuffer);
+  // Bind all thread to Cpux
+  int BindToCpu();
   bool mInit_;
   std::shared_ptr<BufferQueue> mPtrBufferQueue_;
   std::shared_ptr<BufferQueue> mPtrBQ4320p_;
   std::shared_ptr<Buffer> mSubtitleBuffer_;
   NpuWorker NpuWorker_;
+  AuthorWorker AuthorWorker_;
 };
 
 } //namespace android
