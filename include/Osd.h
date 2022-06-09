@@ -46,6 +46,7 @@ public:
 	}
 
   int Init();
+  int State();
   void ClearFont();
   int AddDrawFont(const wchar_t* str, int font_size);
   int AddDrawFont(const char* str, int font_size);
@@ -76,6 +77,7 @@ private:
   FT_Face       mFace_;
   FT_GlyphSlot  mSlot_;
   unsigned char mImage_[SVEP_OSD_HIGHT][SVEP_OSD_WIDTH];
+  int mState_;
 };
 };
 

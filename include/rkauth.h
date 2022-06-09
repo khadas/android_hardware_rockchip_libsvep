@@ -16,6 +16,7 @@ typedef enum {
     RKAUTH_GET_DEVICE_INFO_ERROR = -7,
     RKAUTH_NETWORK_ERROR = -8,
     RKAUTH_ACTIVATE_CODE_EXPIRED = -9,
+    RKAUTH_LICENSE_PARSE_ERROR = -10
 } rkauth_error_code;
 
 /**

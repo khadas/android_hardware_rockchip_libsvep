@@ -26,6 +26,7 @@ enum AuthorState {
   SVEP_AUTHOR_PERMISSION_DENIED = -2,
   SVEP_AUTHOR_CODE_ERROR        = -3,
   SVEP_AUTHOR_LICENSE_ERROR     = -4,
+  SVEP_AUTHOR_LICENSE_RESET     = -5,
 };
 
 class AuthorWorker : public Worker {
