@@ -27,7 +27,7 @@ namespace android {
 
 // Verison info
 #define SVEP_MAGIC        0x83991906
-#define SVEP_VERSION      "Svep-1.4.1"
+#define SVEP_VERSION      "Svep-1.4.2"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 
 // Release property interface.
@@ -106,6 +106,7 @@ enum SvepMode {
     SVEP_1080p,
     SVEP_2160p,
     SVEP_4320p,
+    SVEP_4320p_v2,
 };
 
 enum SvepModeUsage {
