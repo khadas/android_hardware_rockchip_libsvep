@@ -24,7 +24,7 @@
 #include "GpuWorker.h"
 #include "AuthorWorker.h"
 
-#include <map>
+#include <set>
 #include <queue>
 #include <memory>
 
@@ -45,7 +45,9 @@ private:
   int QueueSvepBuffer(std::shared_ptr<SvepBackendContext> abCtx, const std::shared_ptr<Buffer> buffer);
   std::shared_ptr<Buffer> DequeueSvepDstBuffer(std::shared_ptr<SvepBackendContext> ctx);
   int QueueSvepDstBuffer(std::shared_ptr<SvepBackendContext> abCtx, const std::shared_ptr<Buffer> buffer);
-  int ConvertToRgb888(const SvepImageInfo &srcBuffer, std::shared_ptr<Buffer> dstBuffer);
+  int ConvertByRga(const SvepImageInfo &srcBuffer, const SvepImageInfo &dstBuffer);
+  int ConvertByRga2(const SvepImageInfo &srcBuffer, const SvepImageInfo &dstBuffer);
+  int BufferClearByRga(std::shared_ptr<SvepBackendContext> ctx);
   // Bind all thread to Cpux
   int BindToCpu();
   bool mInit_;
@@ -54,6 +56,9 @@ private:
   std::shared_ptr<Buffer> mSubtitleBuffer_;
   NpuWorker NpuWorker_;
   AuthorWorker AuthorWorker_;
+  // BufferClear parameter
+  std::set<uint64_t> mBufferClearCacheId_;
+  SvepRect mLastRect_;
 };
 
 } //namespace android

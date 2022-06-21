@@ -5,7 +5,7 @@
  * @Author: Randall Zhuo
  * @Date: 2021-10-20 14:08:09
  * @LastEditors: Randall
- * @LastEditTime: 2022-05-23 15:08:03
+ * @LastEditTime: 2022-05-23 16:06:27
  * @Description: TODO
  */
 
@@ -44,6 +44,7 @@ private:
 public:
     RKSVEP(int input_width, int input_height, int output_width, int output_height, bool enable_enhancement_only = false);
     RKSVEP(int input_width, int input_height, int output_width, int output_height, RKSVEPBUFFER npuInerBuffer, bool enable_enhancement_only = false);
+    RKSVEP(int input_width, int input_height, int input_fmt, int output_width, int output_height, int output_fmt, RKSVEPBUFFER npuInerBuffer, bool enable_enhancement_only = false);
     ~RKSVEP();
     bool verify();
     int run(RKSVEPBUFFERHANDLE inputBufferHandle);

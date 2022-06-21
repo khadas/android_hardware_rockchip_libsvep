@@ -27,7 +27,7 @@ namespace android {
 
 // Verison info
 #define SVEP_MAGIC        0x83991906
-#define SVEP_VERSION      "Svep-1.4.2"
+#define SVEP_VERSION      "Svep-1.5.0"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 
 // Release property interface.
@@ -165,6 +165,17 @@ public:
     iRight_  = rhs.iRight_;
     iBottom_ = rhs.iBottom_;
     return *this;
+  };
+
+  bool operator!=(const SvepRect& rhs){
+    if(iLeft_   != rhs.iLeft_ ||
+       iTop_    != rhs.iTop_  ||
+       iRight_  != rhs.iRight_||
+       iBottom_ != rhs.iBottom_){
+      return true;
+    }
+
+    return false;
   };
 
   bool isValid() const {
