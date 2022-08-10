@@ -27,7 +27,7 @@ namespace android {
 
 // Verison info
 #define SVEP_MAGIC        0x83991906
-#define SVEP_VERSION      "Svep-1.5.0"
+#define SVEP_VERSION      "Svep-1.6.0"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 
 // Release property interface.
@@ -39,7 +39,6 @@ namespace android {
 
 // OSD string interface.
 #define SVEP_OSD_VIDEO_STR  L"RKNPU-AI视频增强"
-#define SVEP_OSD_GLOBAL_STR L"RKNPU-AI全局增强"
 
 // Vendor Storage ID.
 #define SVEP_VENDOR_AUTHOR_ID "ro.vendor.svep.vsid"
@@ -121,8 +120,7 @@ enum SvepBufferMask {
 
 enum SvepOsdMode {
     SVEP_OSD_DISABLE = 0,
-    SVEP_OSD_ENABLE_VIDEO,
-    SVEP_OSD_ENABLE_GLOBAL
+    SVEP_OSD_ENABLE_VIDEO
 };
 
 struct SvepVersion{
@@ -239,21 +237,18 @@ public:
   // Svep Osd Mode : 0 / 1 / 2
   SvepOsdMode mOsdMode_;
   const wchar_t* mOsdVideo_;
-  const wchar_t* mOsdGlobal_;
 
   SvepParameter() = default;
   SvepParameter(const SvepParameter& rhs){
     mEnhancementRate_ = rhs.mEnhancementRate_;
     mOsdMode_ = rhs.mOsdMode_;
     mOsdVideo_ = rhs.mOsdVideo_;
-    mOsdGlobal_ = rhs.mOsdGlobal_;
   };
 
   SvepParameter& operator=(const SvepParameter& rhs){
     mEnhancementRate_ = rhs.mEnhancementRate_;
     mOsdMode_ = rhs.mOsdMode_;
     mOsdVideo_ = rhs.mOsdVideo_;
-    mOsdGlobal_ = rhs.mOsdGlobal_;
     return *this;
   };
 };
