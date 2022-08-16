@@ -27,11 +27,12 @@ namespace android {
 
 // Verison info
 #define SVEP_MAGIC        0x83991906
-#define SVEP_VERSION      "Svep-1.6.0"
+#define SVEP_VERSION      "Svep-1.6.1"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 
 // Release property interface.
 #define SVEP_MODE_NAME               "persist.sys.svep.mode"
+#define SVEP_RUNTIME_DISABLE_NAME    "sys.svep.runtime_disable"
 #define SVEP_ENHANCEMENT_RATE_NAME   "persist.sys.svep.enhancement_rate"
 #define SVEP_CONTRAST_MODE_NAME      "persist.sys.svep.contrast_mode"
 #define SVEP_CONTRAST_MODE_OFFSET    "persist.sys.svep.contrast_offset_ratio"
