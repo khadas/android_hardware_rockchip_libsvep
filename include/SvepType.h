@@ -27,7 +27,7 @@ namespace android {
 
 // Verison info
 #define SVEP_MAGIC        0x83991906
-#define SVEP_VERSION      "Svep-1.6.3"
+#define SVEP_VERSION      "Svep-1.6.4"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 
 // Release property interface.
@@ -277,7 +277,7 @@ public:
 
 class SvepContext {
 public:
-  int mMagic_;
+  unsigned int mMagic_;
   SvepVersion mVersion_;
   SvepStage mStage_;
   SvepMode mSvepMode_;
@@ -317,7 +317,7 @@ public:
 
 class SvepBackendContext {
 public:
-  int mMagic_;
+  unsigned int mMagic_;
   SvepVersion mVersion_;
   SvepStage mStage_;
   SvepMode mSvepMode_;

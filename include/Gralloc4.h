@@ -52,6 +52,7 @@
 #include <utils/Errors.h>
 
 #include <ui/PixelFormat.h>
+#include <string>
 
 /* ---------------------------------------------------------------------------------------------------------
  *  Macros Definition
