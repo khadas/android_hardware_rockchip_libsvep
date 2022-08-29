@@ -38,7 +38,7 @@ public:
 
 private:
   std::string sName_;
-  int iMaxBufferSize_;
+  unsigned long iMaxBufferSize_;
   std::shared_ptr<Buffer> currentBuffer_;
   std::queue<std::shared_ptr<Buffer>> bufferQueue_;
 };
