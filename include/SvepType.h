@@ -27,7 +27,7 @@ namespace android {
 
 // Verison info
 #define SVEP_MAGIC        0x83991906
-#define SVEP_VERSION      "Svep-1.6.4"
+#define SVEP_VERSION      "Svep-1.6.5"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 
 // Release property interface.
@@ -36,10 +36,14 @@ namespace android {
 #define SVEP_ENHANCEMENT_RATE_NAME   "persist.sys.svep.enhancement_rate"
 #define SVEP_CONTRAST_MODE_NAME      "persist.sys.svep.contrast_mode"
 #define SVEP_CONTRAST_MODE_OFFSET    "persist.sys.svep.contrast_offset_ratio"
+#define SVEP_OSD_VIDEO_ONELINE_MODE  "persist.sys.svep.enable_oneline_osd"
 #define SVEP_AVG_COST_TIME_NAME      "vendor.svep.avg_cost_time"
-
 // OSD string interface.
 #define SVEP_OSD_VIDEO_STR  L"RKNPU-AI视频增强"
+// One line OSD
+#define SVEP_OSD_VIDEO_ONELINE_STR  L"AI"
+// 30hz, 360 is 12 second.
+#define SVEP_OSD_VIDEO_ONELINE_CNT  360
 
 // Vendor Storage ID.
 #define SVEP_VENDOR_AUTHOR_ID "ro.vendor.svep.vsid"
@@ -121,7 +125,8 @@ enum SvepBufferMask {
 
 enum SvepOsdMode {
     SVEP_OSD_DISABLE = 0,
-    SVEP_OSD_ENABLE_VIDEO
+    SVEP_OSD_ENABLE_VIDEO,
+    SVEP_OSD_ENABLE_VIDEO_ONELINE
 };
 
 struct SvepVersion{

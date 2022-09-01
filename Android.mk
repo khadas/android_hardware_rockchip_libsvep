@@ -243,7 +243,7 @@ LOCAL_STATIC_LIBRARIES := \
 	libfreetype-svep
 
 # API 31 -> Android 12.0
-ifeq (1,$(strip $(shell expr $(PLATFORM_SDK_VERSION) \= 32)))
+ifeq (1,$(strip $(shell expr $(PLATFORM_SDK_VERSION) \> 30)))
 
 LOCAL_SHARED_LIBRARIES += \
 	libgralloctypes \
