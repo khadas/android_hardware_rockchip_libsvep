@@ -27,7 +27,7 @@ namespace android {
 
 // Verison info
 #define SVEP_MAGIC        0x83991906
-#define SVEP_VERSION      "Svep-1.6.5"
+#define SVEP_VERSION      "Svep-1.7.7"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 
 // Release property interface.
@@ -38,6 +38,8 @@ namespace android {
 #define SVEP_CONTRAST_MODE_OFFSET    "persist.sys.svep.contrast_offset_ratio"
 #define SVEP_OSD_VIDEO_ONELINE_MODE  "persist.sys.svep.enable_oneline_osd"
 #define SVEP_AVG_COST_TIME_NAME      "vendor.svep.avg_cost_time"
+#define SVEP_OSD_VIDEO_ONELINE_WATI_SEC   "persist.sys.svep.oneline_osd_wait_second"
+
 // OSD string interface.
 #define SVEP_OSD_VIDEO_STR  L"RKNPU-AI视频增强"
 // One line OSD
@@ -126,7 +128,7 @@ enum SvepBufferMask {
 enum SvepOsdMode {
     SVEP_OSD_DISABLE = 0,
     SVEP_OSD_ENABLE_VIDEO,
-    SVEP_OSD_ENABLE_VIDEO_ONELINE
+    SVEP_OSD_ENABLE_VIDEO_ONELINE,
 };
 
 struct SvepVersion{
@@ -335,6 +337,8 @@ public:
   UniqueFd ufCurrentFinishFence_;
   struct timeval mStartTime_;
   std::vector<TimeStamp> mTimeStampVec_;
+  void* mNpuHandle_;
+  void* mGpuHandle_;
 
   SvepBackendContext(const SvepContext ac):
     mMagic_(ac.mMagic_),

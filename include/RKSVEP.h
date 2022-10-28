@@ -5,7 +5,7 @@
  * @Author: Randall Zhuo
  * @Date: 2021-10-20 14:08:09
  * @LastEditors: Randall
- * @LastEditTime: 2022-05-23 16:06:27
+ * @LastEditTime: 2022-08-29 10:34:53
  * @Description: TODO
  */
 
@@ -48,7 +48,7 @@ public:
     ~RKSVEP();
     bool verify();
     int run(RKSVEPBUFFERHANDLE inputBufferHandle);
-    int postProcess(RKSVEPBUFFERHANDLE outputBufferHandle, float enhancementRate, bool enable_WithAverging = false);
+    int postProcess(RKSVEPBUFFERHANDLE inputBufferHandle, RKSVEPBUFFERHANDLE outputBufferHandle, float enhancementRate, bool enable_WithAverging = false);
 
     RKSVEPBUFFERHANDLE createInputBufferHandle(RKSVEPBUFFER &inputBuffer);
     int destoryInputBufferHandle(RKSVEPBUFFERHANDLE handle);
