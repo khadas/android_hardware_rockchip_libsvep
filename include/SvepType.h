@@ -27,7 +27,7 @@ namespace android {
 
 // Verison info
 #define SVEP_MAGIC        0x83991906
-#define SVEP_VERSION      "Svep-1.7.7"
+#define SVEP_VERSION      "Svep-1.7.9"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 
 // Release property interface.
