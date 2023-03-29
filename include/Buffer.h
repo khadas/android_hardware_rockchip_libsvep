@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#pragma once
+#ifndef SVEP_BUFFER_H
+#define SVEP_BUFFER_H
 
 #include "Gralloc.h"
 #include "autofd.h"
@@ -79,3 +79,5 @@ private:
 };
 
 }// namespace android
+
+#endif

@@ -42,9 +42,15 @@ public:
 
 private:
   std::shared_ptr<Buffer> DequeueSvepBuffer(std::shared_ptr<SvepBackendContext> ctx);
-  int QueueSvepBuffer(std::shared_ptr<SvepBackendContext> abCtx, const std::shared_ptr<Buffer> buffer);
+  int QueueSvepBuffer(std::shared_ptr<SvepBackendContext> abCtx,
+                      const std::shared_ptr<Buffer> buffer);
   std::shared_ptr<Buffer> DequeueSvepDstBuffer(std::shared_ptr<SvepBackendContext> ctx);
-  int QueueSvepDstBuffer(std::shared_ptr<SvepBackendContext> abCtx, const std::shared_ptr<Buffer> buffer);
+  int QueueSvepDstBuffer(std::shared_ptr<SvepBackendContext> abCtx,
+                         const std::shared_ptr<Buffer> buffer);
+  // Rotate mode
+  std::shared_ptr<Buffer> DequeueSvepDstRotateBuffer(std::shared_ptr<SvepBackendContext> ctx);
+  int QueueSvepDstRotateBuffer(std::shared_ptr<SvepBackendContext> abCtx,
+                               const std::shared_ptr<Buffer> buffer);
   int ConvertByRga(const SvepImageInfo &srcBuffer, const SvepImageInfo &dstBuffer);
   int ConvertByRga2(const SvepImageInfo &srcBuffer, const SvepImageInfo &dstBuffer);
   int BufferClearByRga(std::shared_ptr<SvepBackendContext> ctx);
@@ -53,6 +59,7 @@ private:
   bool mInit_;
   std::shared_ptr<BufferQueue> mPtrBufferQueue_;
   std::shared_ptr<BufferQueue> mPtrBQ4320p_;
+  std::shared_ptr<BufferQueue> mPtrBQRotate_;
   std::shared_ptr<Buffer> mSubtitleBuffer_;
   NpuWorker NpuWorker_;
   AuthorWorker AuthorWorker_;

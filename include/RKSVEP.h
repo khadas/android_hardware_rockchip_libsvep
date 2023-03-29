@@ -5,11 +5,16 @@
  * @Author: Randall Zhuo
  * @Date: 2021-10-20 14:08:09
  * @LastEditors: Randall
- * @LastEditTime: 2022-08-29 10:34:53
+ * @LastEditTime: 2022-10-13 16:06:31
  * @Description: TODO
  */
 
+#ifndef _RKSVEP_H
+#define _RKSVEP_H  
+
 #pragma once
+
+#define GPU_IMAGE_WIDTH_ALIGN 64
 
 typedef void*  RKSVEPBUFFERHANDLE;
 
@@ -42,9 +47,11 @@ private:
     /* data */
    int init();
 public:
-    RKSVEP(int input_width, int input_height, int output_width, int output_height, bool enable_enhancement_only = false);
-    RKSVEP(int input_width, int input_height, int output_width, int output_height, RKSVEPBUFFER npuInerBuffer, bool enable_enhancement_only = false);
     RKSVEP(int input_width, int input_height, int input_fmt, int output_width, int output_height, int output_fmt, RKSVEPBUFFER npuInerBuffer, bool enable_enhancement_only = false);
+    RKSVEP(int input_width, int input_height, int input_stride, int input_fmt, int scale_ratio,
+            int output_width, int output_height, int output_stride, int output_fmt, 
+            RKSVEPBUFFER npuInerBuffer, bool enable_enhancement_only = false);
+
     ~RKSVEP();
     bool verify();
     int run(RKSVEPBUFFERHANDLE inputBufferHandle);
@@ -60,5 +67,8 @@ public:
     RKSVEPBUFFERHANDLE createEnhancementBufferHandle(RKSVEPBUFFER &inputBuffer, RKSVEPBUFFER &outBuffer);
     int destoryEnhancementBufferHandle(RKSVEPBUFFERHANDLE handle);
     int run_enhancement(RKSVEPBUFFERHANDLE handle, float enhancementRate = 0.5f);
+    int run_facebeauty(RKSVEPBUFFERHANDLE handle, float sigma_range, float sigma_spatial, float level = 0.5f); 
 
 };
+
+#endif

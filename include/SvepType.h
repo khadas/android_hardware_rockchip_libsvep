@@ -27,7 +27,7 @@ namespace android {
 
 // Verison info
 #define SVEP_MAGIC        0x83991906
-#define SVEP_VERSION      "Svep-1.7.10"
+#define SVEP_VERSION      "Svep-1.8.4"
 #define SVEP_VERSION_NAME "vendor.svep.version"
 
 // Release property interface.
@@ -41,7 +41,7 @@ namespace android {
 #define SVEP_OSD_VIDEO_ONELINE_WATI_SEC   "persist.sys.svep.oneline_osd_wait_second"
 
 // OSD string interface.
-#define SVEP_OSD_VIDEO_STR  L"RKNPU-AI视频增强"
+#define SVEP_OSD_VIDEO_STR  L"RKNPU-SVEP-SR"
 // One line OSD
 #define SVEP_OSD_VIDEO_ONELINE_STR  L"AI"
 // 30hz, 360 is 12 second.
@@ -129,6 +129,36 @@ enum SvepOsdMode {
     SVEP_OSD_DISABLE = 0,
     SVEP_OSD_ENABLE_VIDEO,
     SVEP_OSD_ENABLE_VIDEO_ONELINE,
+};
+
+enum SvepRotateMode {
+    SVEP_ROTATE_0   = 1 << 0,
+    SVEP_ROTATE_90  = 1 << 1,
+    SVEP_ROTATE_180 = 1 << 2,
+    SVEP_ROTATE_270 = 1 << 3,
+    SVEP_REFLECT_X  = 1 << 4,
+    SVEP_REFLECT_Y  = 1 << 5,
+
+};
+
+static std::string RotateToString(SvepRotateMode mode){
+  switch (mode) {
+      case SVEP_ROTATE_0:
+        return "None";
+      case SVEP_REFLECT_X:
+        return "FlipH";
+      case SVEP_REFLECT_Y:
+        return "FlipV";
+      case SVEP_ROTATE_90:
+        return "Rotate90";
+      case SVEP_ROTATE_180:
+        return "Rotate180";
+      case SVEP_ROTATE_270:
+        return "Rotate270";
+      default:
+        return "Unknown";
+  }
+  return "Unknown";
 };
 
 struct SvepVersion{
@@ -266,18 +296,21 @@ public:
   SvepBufferInfo mBufferInfo_;
   SvepRect mCrop_;
   UniqueFd mAcquireFence_;
+  SvepRotateMode mRotateMode_;
   bool mValid;
   SvepImageInfo() = default;
   SvepImageInfo(const SvepImageInfo& rhs){
     mBufferInfo_ = rhs.mBufferInfo_;
     mCrop_ = rhs.mCrop_;
     mAcquireFence_ = rhs.mAcquireFence_.Dup();
+    mRotateMode_ = rhs.mRotateMode_;
   };
 
   SvepImageInfo& operator=(const SvepImageInfo& rhs){
     mBufferInfo_ = rhs.mBufferInfo_;
     mCrop_ = rhs.mCrop_;
     mAcquireFence_ = rhs.mAcquireFence_.Dup();
+    mRotateMode_ = rhs.mRotateMode_;
     return *this;
   };
 };

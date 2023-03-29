@@ -33,7 +33,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#pragma once
+#ifndef SVEP_GRALLOC_H
+#define SVEP_GRALLOC_H
 
 #include "Gralloc4.h"
 
@@ -93,4 +94,5 @@ private:
 #endif
 };
 }
+#endif
 

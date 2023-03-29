@@ -20,8 +20,6 @@
 #include "Buffer.h"
 #include "BufferQueue.h"
 #include "SvepType.h"
-#include "Osd.h"
-#include "RotateWorker.h"
 
 #include <map>
 #include <queue>
@@ -29,33 +27,18 @@
 
 namespace android {
 
-class GpuWorker : public Worker {
+class RotateWorker : public Worker {
   public:
-  GpuWorker();
-  ~GpuWorker() override;
+  RotateWorker();
+  ~RotateWorker() override;
 
-  int Init(RKSVEP *pVDlss360,
-           RKSVEP *pVDlss540,
-           RKSVEP *pVDlss720,
-           RKSVEP *pVDlss1080,
-           RKSVEP *pVDlss2160,
-           int timeline_fd);
+  int Init(int timeline_fd);
   void Queue(std::shared_ptr<SvepBackendContext> abCtx);
 
   protected:
   void Routine() override;
   // int WaitAllFence(std::shared_ptr<SvepBackendContext> abCtx);
   int SignalFinishFence(std::shared_ptr<SvepBackendContext> abCtx);
-  int GpuRun(std::shared_ptr<SvepBackendContext> abCtx);
-  RKSVEPBUFFERHANDLE SvepImportBuffer(std::shared_ptr<SvepBackendContext> abCtx);
-  int SvepReleaseBuffer(std::shared_ptr<SvepBackendContext> abCtx);
-  // SvepOsd
-  int SvepUpdateOsd(std::shared_ptr<SvepBackendContext> abCtx);
-  int Run(std::shared_ptr<SvepBackendContext> abCtx, RKSVEPBUFFERHANDLE bufferHandle);
-  int ScaleTo8k(std::shared_ptr<SvepBackendContext> abCtx);
-  // Osd "RKNPU AI Video Enhancement" Subtitle
-  int OsdSubtitle(std::shared_ptr<SvepBackendContext> abCtx);
-  int ContrastMode(std::shared_ptr<SvepBackendContext> abCtx);
   int RotateMode(std::shared_ptr<SvepBackendContext> abCtx);
   int CalculateCostTime(std::shared_ptr<SvepBackendContext> abCtx);
   private:
@@ -64,21 +47,9 @@ class GpuWorker : public Worker {
   int iTimelineFd_;
   int iTimeline_;
   int iCurrentTimeline_;
-  RKSVEP *pVDlss360_;
-  RKSVEP *pVDlss540_;
-  RKSVEP *pVDlss720_;
-  RKSVEP *pVDlss1080_;
-  RKSVEP *pVDlss2160_;
-  std::map<uint64_t, RKSVEPBUFFERHANDLE> mapGpuHandle;
-
-
-  SvepOsd *svepOsd_;
 
   long totalTime_;
   long lastAvgCostTime_;
   long avgCnt_;
-
-  SvepMode mLastMode_ = UN_SUPPORT;
-  RotateWorker mRotateWorker_;
 };
 } //namespace android

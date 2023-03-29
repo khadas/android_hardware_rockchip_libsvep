@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-#pragma once
+#ifndef SVEP_BUFFERQUEUE_H
+#define SVEP_BUFFERQUEUE_H
 
 #include "Buffer.h"
 
@@ -44,3 +45,4 @@ private:
 };
 
 }// namespace android
+#endif
