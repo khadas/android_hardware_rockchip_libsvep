@@ -25,6 +25,17 @@ namespace android {
 
 #define MEMC_MAGIC 0x83991906
 #define MEMC_VERSION "Memc-1.3.1"
+// 用于使能MEMC输出
+#define MEMC_MODE_NAME               "persist.sys.memc.mode"
+// 用于应用动态关闭MEMC输出
+#define MEMC_RUNTIME_DISABLE_NAME    "sys.svep.runtime_disable"
+// 用于开启对比模式
+#define MEMC_CONTRAST_MODE_NAME      "persist.sys.memc.contrast_mode"
+// 用于配置osd单行模式
+#define MEMC_OSD_VIDEO_ONELINE_MODE  "persist.sys.memc.enable_oneline_osd"
+// 用于输出单帧耗时
+#define MEMC_AVG_COST_TIME_NAME      "vendor.svep.avg_cost_time"
+
 #define MEMC_VERSION_NAME "vendor.memc.version"
 #define MEMC_DEBUG_NAME "vendor.memc.log"
 

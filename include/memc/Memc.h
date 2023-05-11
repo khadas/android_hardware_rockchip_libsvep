@@ -48,7 +48,7 @@ public:
   // Get output image from bufferquque
   int MpGetOutputImage(const MemcContext &ctx, MemcImageInfo *outImage);
   // Clear the cached information
-  int MpClearInternalCacheInfo(const MemcContext &ctx);
+  int MpClearInternalCacheInfo();
 
   /**
    * MEMC_NATIVE_MODE
