@@ -24,7 +24,7 @@
 namespace android {
 
 #define MEMC_MAGIC 0x83991906
-#define MEMC_VERSION "Memc-1.3.1"
+#define MEMC_VERSION "Memc-1.3.2"
 // 用于使能MEMC输出
 #define MEMC_MODE_NAME               "persist.sys.memc.mode"
 // 用于应用动态关闭MEMC输出
@@ -35,8 +35,9 @@ namespace android {
 #define MEMC_OSD_VIDEO_ONELINE_MODE  "persist.sys.memc.enable_oneline_osd"
 // 用于输出单帧耗时
 #define MEMC_AVG_COST_TIME_NAME      "vendor.svep.avg_cost_time"
-
+// 版本号
 #define MEMC_VERSION_NAME "vendor.memc.version"
+// 调试日志接口
 #define MEMC_DEBUG_NAME "vendor.memc.log"
 
 // Vendor Storage ID.
@@ -122,21 +123,18 @@ public:
   // Memc Osd Mode : 0 / 1 / 2
   MemcOsdMode mOsdMode_;
   const wchar_t* mOsdVideo_;
-  bool enableMemcOutput_;
   bool enableMemcComparation_;
 
   MemcParameter() = default;
   MemcParameter(const MemcParameter& rhs){
     mOsdMode_ = rhs.mOsdMode_;
     mOsdVideo_ = rhs.mOsdVideo_;
-    enableMemcOutput_ = rhs.enableMemcOutput_;
     enableMemcComparation_ = rhs.enableMemcComparation_;
   };
 
   MemcParameter& operator=(const MemcParameter& rhs){
     mOsdMode_ = rhs.mOsdMode_;
     mOsdVideo_ = rhs.mOsdVideo_;
-    enableMemcOutput_ = rhs.enableMemcOutput_;
     enableMemcComparation_ = rhs.enableMemcComparation_;
     return *this;
   };
@@ -249,8 +247,8 @@ public:
   MemcVersion mVersion_;
   MemcStage mStage_;
   MemcImageInfo mSrc_;     //输入 image0, 必须设置
-  MemcImageInfo mSrcSub_;  //输入 image1, 在 MEMC_SELF_MANAGE_MODE 工作状态下不用设置
-  MemcImageInfo mMemcDst_; //Memc 输出 image, 在 MEMC_SELF_MANAGE_MODE 工作状态下不用设置
+  MemcImageInfo mSrcSub_;  //输入 image1, 在 MEMC_PROXY_MODE 工作状态下不用设置
+  MemcImageInfo mMemcDst_; //Memc 输出 image, 在 MEMC_PROXY_MODE 工作状态下不用设置
   MemcParameter mParam_;
   MemcMode mMemcMode_;     //可以设置 Memc 模式，若不设置则内部自动选择最合适的模式
   float mInputFps_;
