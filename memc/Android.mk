@@ -33,7 +33,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 LOCAL_PATH := $(call my-dir)
-ifeq ($(strip $(BOARD_USES_LIBSVEP)),true)
+ifeq ($(strip $(BOARD_USES_LIBSVEP_MEMC)),true)
 
 TARGET_ANDROID_VERSION := 12.0
 TARGET_SOC_PLATFORM := rk3588

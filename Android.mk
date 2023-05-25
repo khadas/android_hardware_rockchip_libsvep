@@ -34,9 +34,19 @@
 # limitations under the License.
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
+
 # BOARD_USES_LIBSVEP=false
 # BOARD_USES_LIBSVEP=true
 ifeq ($(strip $(BOARD_USES_LIBSVEP)),true)
+
 subdir_makefiles=$(call first-makefiles-under,$(LOCAL_PATH))
 $(foreach mk,$(subdir_makefiles),$(info including $(mk) ...)$(eval include $(mk)))
 endif
+
+# BOARD_USES_LIBSVEP_MEMC=false
+# BOARD_USES_LIBSVEP_MEMC=true
+ifeq ($(strip $(BOARD_USES_LIBSVEP_MEMC)),true)
+subdir_makefiles=$(call first-makefiles-under,$(LOCAL_PATH))
+$(foreach mk,$(subdir_makefiles),$(info including $(mk) ...)$(eval include $(mk)))
+endif
+
