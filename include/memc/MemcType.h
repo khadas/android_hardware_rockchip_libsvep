@@ -1,21 +1,17 @@
-/*
- * Copyright (C) 2016 The Android Open Source Project
+/****************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *    Copyright (c) 2023 by Rockchip Corp.  All rights reserved.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *    The material in this file is confidential and contains trade secrets
+ *    of Rockchip Corporation. This is proprietary information owned by
+ *    Rockchip Corporation. No part of this work may be disclosed,
+ *    reproduced, copied, transmitted, or used in any way for any purpose,
+ *    without the express written permission of Rockchip Corporation.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+ *****************************************************************************/
 #pragma once
 
-#include "autofd.h"
+#include "MemcAutoFd.h"
 #include <stdint.h>
 #include <utils/Trace.h>
 #include <cutils/properties.h>
@@ -24,7 +20,7 @@
 namespace android {
 
 #define MEMC_MAGIC 0x83991906
-#define MEMC_VERSION "Memc-1.3.2"
+#define MEMC_VERSION "Memc-1.4.0"
 // 用于使能MEMC输出
 #define MEMC_MODE_NAME               "persist.sys.memc.mode"
 // 用于应用动态关闭MEMC输出
@@ -33,6 +29,8 @@ namespace android {
 #define MEMC_CONTRAST_MODE_NAME      "persist.sys.memc.contrast_mode"
 // 用于配置osd单行模式
 #define MEMC_OSD_VIDEO_ONELINE_MODE  "persist.sys.memc.enable_oneline_osd"
+// 关闭 MEMC osd
+#define MEMC_OSD_DISABLE_MODE "persist.sys.svep.disable_memc_osd"
 // 用于输出单帧耗时
 #define MEMC_AVG_COST_TIME_NAME      "vendor.svep.avg_cost_time"
 // 版本号
@@ -42,68 +40,30 @@ namespace android {
 
 // Vendor Storage ID.
 #define MEMC_VENDOR_AUTHOR_ID "ro.vendor.memc.vsid"
+// OSD string interface.
+#define MEMC_OSD_VIDEO_STR L"RKNPU-SVEP-MEMC"
 
-#define MEMC_ALOGE(x, ...)  \
-    ALOGE("%s,line=%d " x ,__FUNCTION__,__LINE__, ##__VA_ARGS__)
-
-#define MEMC_ALOGW(x, ...)  \
-    ALOGW("%s,line=%d " x ,__FUNCTION__,__LINE__, ##__VA_ARGS__)
-
-#define MEMC_ALOGI(x, ...)  \
-    ALOGI("%s,line=%d " x ,__FUNCTION__,__LINE__, ##__VA_ARGS__)
-
-#define MEMC_ALOGD_IF(x, ...)  \
-    ALOGD_IF(MemcLogLevel(), "%s,line=%d " x ,__FUNCTION__,__LINE__, ##__VA_ARGS__)
-
-#define YUV_ALIGN 2
-#define RGB_ALIGN 1
-
-#define IS_ALIGN(val,align)    (((val)&(align-1))==0)
-#ifndef ALIGN
-#define ALIGN( value, base ) (((value) + ((base) - 1)) & ~((base) - 1))
-#endif
-#define ALIGN_DOWN( value, base)	(value & (~(base-1)) )
-
-#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
-
-int UpdateMemcLogLevel();
-bool MemcLogLevel();
-
-enum MemcError {
-    MemcNone = 0,
-    MemcBadVersion,
-    MemcBadStage,
-    MemcBadParameter,
-    MemcUnLicence,
-    MemcUnSupported,
-    MemcUnSucess,
-    MemcUnInit,
+enum MEMC_ERROR {
+    MEMC_NO_ERROR = 0,
+    MEMC_BAD_VERSION,
+    MEMC_BAD_STAGE,
+    MEMC_BAD_PARAM,
+    MEMC_BAD_LICENCE,
+    MEMC_UN_SUPPORTED,
+    MEMC_UN_SUCCESS,
+    MEMC_INIT_FAILED,
+    MEMC_FAIL_AND_TRY_AGAIN,
 };
 
-enum MemcStage {
-    MEMC_UN_INIT = 0,
-    MEMC_INIT_SUCCESS,
-    MEMC_VERITY_SRC_SUCCESS,
-    MEMC_GET_REQUIRE_SUCCESS,
-    MEMC_VERITY_DST_SUCCESS,
-};
-
-enum MemcBufferMask {
+enum MEMC_BUFFER_MASK {
     NONE = 0,
     MEMC_AFBC_FORMAT = 1 << 1,
 };
 
-enum MemcMode {
+enum MEMC_MODE {
     MEMC_UN_SUPPORT = 0,
     MEMC_1080P,
     MEMC_4K,
-};
-
-struct MemcModeRequireInfo{
-  MemcMode mode_;
-  int iMemcSrcWidth_;
-  int iMemcSrcHeight_;
-  char cName[20];
 };
 
 struct MemcVersion{
@@ -112,147 +72,68 @@ struct MemcVersion{
   int iPatchLevel_;
 };
 
-enum MemcOsdMode {
+enum MEMC_OSD_MODE {
     MEMC_OSD_DISABLE = 0,
     MEMC_OSD_ENABLE_VIDEO,
     MEMC_OSD_ENABLE_VIDEO_ONELINE,
 };
 
-class MemcParameter{
-public:
-  // Memc Osd Mode : 0 / 1 / 2
-  MemcOsdMode mOsdMode_;
-  const wchar_t* mOsdVideo_;
-  bool enableMemcComparation_;
-
-  MemcParameter() = default;
-  MemcParameter(const MemcParameter& rhs){
-    mOsdMode_ = rhs.mOsdMode_;
-    mOsdVideo_ = rhs.mOsdVideo_;
-    enableMemcComparation_ = rhs.enableMemcComparation_;
-  };
-
-  MemcParameter& operator=(const MemcParameter& rhs){
-    mOsdMode_ = rhs.mOsdMode_;
-    mOsdVideo_ = rhs.mOsdVideo_;
-    enableMemcComparation_ = rhs.enableMemcComparation_;
-    return *this;
-  };
-};
-
 class MemcRect{
 public:
-  int iLeft_;
-  int iTop_;
-  int iRight_;
-  int iBottom_;
+    int iLeft_;   /* 矩形区域 left点坐标 */
+    int iTop_;    /* 矩形区域 top点坐标 */
+    int iRight_;  /* 矩形区域 right点坐标 */
+    int iBottom_; /* 矩形区域 bottom点坐标 */
 
-  int Width() const {return iRight_ - iLeft_; };
-  int Height() const {return iBottom_ - iTop_; };
+    int Width() const;
+    int Height() const;
 
-  MemcRect() = default;
-  MemcRect(const MemcRect& rhs){
-    iLeft_   = rhs.iLeft_;
-    iTop_    = rhs.iTop_;
-    iRight_  = rhs.iRight_;
-    iBottom_ = rhs.iBottom_;
-  };
-
-  MemcRect& operator=(const MemcRect& rhs){
-    iLeft_   = rhs.iLeft_;
-    iTop_    = rhs.iTop_;
-    iRight_  = rhs.iRight_;
-    iBottom_ = rhs.iBottom_;
-    return *this;
-  };
-
-  bool isValid() const {
-    return Width() > 0 && Height() > 0;
-  };
+    MemcRect() : iLeft_(0), iTop_(0), iRight_(0), iBottom_(0) {}
+    MemcRect(const MemcRect& rhs);
+    MemcRect& operator=(const MemcRect& rhs);
+    bool operator!=(const MemcRect& rhs);
+    bool isValid() const;
 };
 
 class MemcBufferInfo{
 public:
-  int iFd_;
-  int iWidth_;
-  int iHeight_;
-  int iFormat_;
-  int iStride_;
-  uint64_t uBufferId_;
-  uint64_t uDataSpace_;
-  uint64_t uBufferMask_;
+    int iFd_;     /* 图像内容fd文件描述符，通常为 dma-buffer fd */
+    int iWidth_;  /* 描述图像宽度，单位为 pixel */
+    int iHeight_; /* 描述图像高度，单位为 pixel */
+    int iFormat_; /* 描述图像格式，单位为 drm_fourcc */
+    int iStride_; /* 描述图像行长度 stride，单位为 pixel */
+    int iSize_;   /* 描述图像完整尺寸，单位为 byte */
+    uint64_t uBufferId_;   /* 描述图像唯一ID, 通常由分配器唯一分配 */
+    uint64_t uColorSpace_; /* 描述图像色域信息 */
+    int uMask_; /* 描述图像特殊的标志，例如 AFBC标志 */
 
-  MemcBufferInfo() = default;
-  MemcBufferInfo(const MemcBufferInfo& rhs){
-    iFd_     = rhs.iFd_;
-    iWidth_  = rhs.iWidth_;
-    iHeight_ = rhs.iHeight_;
-    iFormat_ = rhs.iFormat_;
-    iStride_ = rhs.iStride_;
-    uBufferId_ = rhs.uBufferId_;
-    uDataSpace_ =  rhs.uDataSpace_;
-    uBufferMask_ =  rhs.uBufferMask_;
-
-  };
-  MemcBufferInfo& operator=(const MemcBufferInfo& rhs){
-    iFd_     = rhs.iFd_;
-    iWidth_  = rhs.iWidth_;
-    iHeight_ = rhs.iHeight_;
-    iFormat_ = rhs.iFormat_;
-    iStride_ = rhs.iStride_;
-    uBufferId_ = rhs.uBufferId_;
-    uDataSpace_ =  rhs.uDataSpace_;
-    uBufferMask_ =  rhs.uBufferMask_;
-    return *this;
-  };
-
-  bool isValid() const {
-    return iFd_ > 0 &&
-           iWidth_ > 0 &&
-           iHeight_ > 0 &&
-           iStride_ > 0 &&
-           iFormat_ > 0;
-  }
+    MemcBufferInfo()
+        : iFd_(-1),
+          iWidth_(0),
+          iHeight_(0),
+          iFormat_(0),
+          iStride_(0),
+          iSize_(0),
+          uBufferId_(0),
+          uColorSpace_(0),
+          uMask_(0)
+    {
+    }
+    MemcBufferInfo(const MemcBufferInfo& rhs);
+    MemcBufferInfo& operator=(const MemcBufferInfo& rhs);
+    bool isValid() const;
 };
 
 class MemcImageInfo{
 public:
-  MemcBufferInfo mBufferInfo_;
-  MemcRect mCrop_;
-  UniqueFd mAcquireFence_;
-  UniqueFd mReleaseFence_;
-  bool mValid;
-  MemcImageInfo() = default;
-  MemcImageInfo(const MemcImageInfo& rhs){
-    mBufferInfo_ = rhs.mBufferInfo_;
-    mCrop_ = rhs.mCrop_;
-    mAcquireFence_ = rhs.mAcquireFence_.Dup();
-    mReleaseFence_ = rhs.mReleaseFence_.Dup();
-    mValid = rhs.mValid;
-  };
+    MemcBufferInfo mBufferInfo_; /* 描述图像信息结构 */
+    MemcRect mCrop_;             /* 描述图像crop信息结构 */
+    MemcUniqueFd mAcquireFence_;     /* AcquireFence，标志源图像已完成，可进行读写操作 */
+    bool mValid; /* 图像是否有效 */
 
-  MemcImageInfo& operator=(const MemcImageInfo& rhs){
-    mBufferInfo_ = rhs.mBufferInfo_;
-    mCrop_ = rhs.mCrop_;
-    mAcquireFence_ = rhs.mAcquireFence_.Dup();
-    mReleaseFence_ = rhs.mReleaseFence_.Dup();
-    mValid = rhs.mValid;
-    return *this;
-  };
-};
-
-class MemcContext {
-public:
-  int mMagic_;
-  MemcVersion mVersion_;
-  MemcStage mStage_;
-  MemcImageInfo mSrc_;     //输入 image0, 必须设置
-  MemcImageInfo mSrcSub_;  //输入 image1, 在 MEMC_PROXY_MODE 工作状态下不用设置
-  MemcImageInfo mMemcDst_; //Memc 输出 image, 在 MEMC_PROXY_MODE 工作状态下不用设置
-  MemcParameter mParam_;
-  MemcMode mMemcMode_;     //可以设置 Memc 模式，若不设置则内部自动选择最合适的模式
-  float mInputFps_;
-  int mCtxSequence_;
+    MemcImageInfo() : mAcquireFence_(-1), mValid(0){};
+    MemcImageInfo(const MemcImageInfo& rhs);
+    MemcImageInfo& operator=(const MemcImageInfo& rhs);
 };
 
 } // namespace android
