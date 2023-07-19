@@ -58,40 +58,8 @@ endif
 ifneq ($(filter rk356x, $(strip $(TARGET_BOARD_PLATFORM))), )
 TARGET_SOC_PLATFORM := rk356x
 endif
-
 # SVEP lib
 TARGET_SVEP_LIB_PATH := lib/$(TARGET_SOC_PLATFORM)/$(TARGET_ANDROID_VERSION)
-# Common lib
-TARGET_COMMON_LIB_PATH := lib/common
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := libOpenCL
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_MODULE_STEM := $(LOCAL_MODULE)
-LOCAL_MODULE_SUFFIX := .so
-LOCAL_VENDOR_MODULE := true
-LOCAL_PROPRIETARY_MODULE := true
-ifneq ($(strip $(TARGET_2ND_ARCH)), )
-LOCAL_MULTILIB := both
-LOCAL_SRC_FILES_$(TARGET_ARCH) := $(TARGET_COMMON_LIB_PATH)/$(TARGET_ARCH)/libOpenCL.so
-LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := $(TARGET_COMMON_LIB_PATH)/$(TARGET_2ND_ARCH)/libOpenCL.so
-else
-LOCAL_SRC_FILES_$(TARGET_ARCH) := $(TARGET_COMMON_LIB_PATH)/$(TARGET_ARCH)/libOpenCL.so
-endif
-
-LOCAL_SHARED_LIBRARIES += \
-  libGLES_mali
-# Create symlinks.
-LOCAL_POST_INSTALL_CMD := \
-        cd $(TARGET_OUT_VENDOR)/lib64; \
-        ln -sf egl/libGLES_mali.so libOpenCL.so; \
-        cd -; \
-        cd $(TARGET_OUT_VENDOR)/lib; \
-        ln -sf egl/libGLES_mali.so libOpenCL.so; \
-        cd -;
-
-include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := librknnrt-svep
@@ -112,24 +80,7 @@ endif
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := librksvep
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_MODULE_SUFFIX := .so
-LOCAL_SHARED_LIBRARIES := libOpenCL libc libdl libm librknnrt-svep liblog libz
-LOCAL_VENDOR_MODULE := true
-LOCAL_PROPRIETARY_MODULE := true
-ifneq ($(strip $(TARGET_2ND_ARCH)), )
-LOCAL_MULTILIB := both
-LOCAL_SRC_FILES_$(TARGET_ARCH) := $(TARGET_SVEP_LIB_PATH)/$(TARGET_ARCH)/librksvep.so
-LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := $(TARGET_SVEP_LIB_PATH)/$(TARGET_2ND_ARCH)/librksvep.so
-else
-LOCAL_SRC_FILES_$(TARGET_ARCH) := $(TARGET_SVEP_LIB_PATH)/$(TARGET_ARCH)/librksvep.so
-endif
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := libsvep
+LOCAL_MODULE := libsvepsr
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_SHARED_LIBRARIES := \
@@ -140,7 +91,6 @@ LOCAL_SHARED_LIBRARIES := \
   libsync_vendor \
   librga \
   libOpenCL \
-  librksvep \
   librknnrt-svep \
   libhidlbase \
   libz \
@@ -158,33 +108,24 @@ endif
 LOCAL_PROPRIETARY_MODULE := true
 
 LOCAL_REQUIRED_MODULES := \
-	SvepOsd.ttf \
-	svep-env.sh
+	SrOsd.ttf
 
 ifneq ($(strip $(TARGET_2ND_ARCH)), )
 LOCAL_MULTILIB := both
-LOCAL_SRC_FILES_$(TARGET_ARCH) := $(TARGET_SVEP_LIB_PATH)/$(TARGET_ARCH)/libsvep.so
-LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := $(TARGET_SVEP_LIB_PATH)/$(TARGET_2ND_ARCH)/libsvep.so
+LOCAL_SRC_FILES_$(TARGET_ARCH) := $(TARGET_SVEP_LIB_PATH)/$(TARGET_ARCH)/libsvepsr.so
+LOCAL_SRC_FILES_$(TARGET_2ND_ARCH) := $(TARGET_SVEP_LIB_PATH)/$(TARGET_2ND_ARCH)/libsvepsr.so
 else
-LOCAL_SRC_FILES_$(TARGET_ARCH) := $(TARGET_SVEP_LIB_PATH)/$(TARGET_ARCH)/libsvep.so
+LOCAL_SRC_FILES_$(TARGET_ARCH) := $(TARGET_SVEP_LIB_PATH)/$(TARGET_ARCH)/libsvepsr.so
 endif
 LOCAL_MODULE_SUFFIX := .so
 include $(BUILD_PREBUILT)
 
 ## copy RKNPU-AI-892x136-RGBA.bin from etc to /vendor/etc/
 include $(CLEAR_VARS)
-LOCAL_MODULE := SvepOsd.ttf
+LOCAL_MODULE := SrOsd.ttf
 LOCAL_PROPRIETARY_MODULE := true
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES := res/SvepOsd.ttf
-include $(BUILD_PREBUILT)
-
-## copy init.qcom.test.rc from etc to /vendor/bin/
-include $(CLEAR_VARS)
-LOCAL_MODULE := svep-env.sh
-LOCAL_PROPRIETARY_MODULE := true
-LOCAL_MODULE_CLASS := EXECUTABLES
-LOCAL_SRC_FILES := res/svep-env.sh
+LOCAL_SRC_FILES := res/SrOsd.ttf
 include $(BUILD_PREBUILT)
 
 endif
