@@ -104,7 +104,7 @@ public:
      *         - Other, fail
      */
     SrError MatchSrMode(const SrImageInfo *int_src, SrModeUsage usage,
-                         SrMode *out_mode);
+                        SrMode *out_mode);
     /**
      * @brief 获取目标土星参数
      *

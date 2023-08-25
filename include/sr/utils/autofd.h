@@ -24,7 +24,7 @@ public:
 
     SrUniqueFd(SrUniqueFd &&rhs)
     {
-        fd_ = rhs.fd_;
+        fd_     = rhs.fd_;
         rhs.fd_ = -1;
     }
 
@@ -42,7 +42,7 @@ public:
     int Release()
     {
         int old_fd = fd_;
-        fd_ = -1;
+        fd_        = -1;
         return old_fd;
     }
 
@@ -75,13 +75,13 @@ struct SrOutputFd
     SrOutputFd(int *fd) : fd_(fd) {}
     SrOutputFd(SrOutputFd &&rhs)
     {
-        fd_ = rhs.fd_;
+        fd_     = rhs.fd_;
         rhs.fd_ = NULL;
     }
 
     SrOutputFd &operator=(SrOutputFd &&rhs)
     {
-        fd_ = rhs.fd_;
+        fd_     = rhs.fd_;
         rhs.fd_ = NULL;
         return *this;
     }
