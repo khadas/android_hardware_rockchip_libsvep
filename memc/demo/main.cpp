@@ -378,7 +378,7 @@ int test_memc_proxy_mode(const image_arg &input_image0, const image_arg &input_i
     int ret = 0;
     //1. 获取 Memc 实例
     MemcProxyMode* memc = new MemcProxyMode();
-    if(memc->Init(MEMC_VERSION, true)){
+    if(memc->Init(MEMC_VERSION, false)){
         printf("Memc init check fail\n");
         return -1;
     }
@@ -553,7 +553,7 @@ int test_memc_native_mode(const image_arg &input_image0, const image_arg &input_
     int ret = 0;
     //1. 获取 Memc 实例
     MemcNativeMode* memc = new MemcNativeMode();
-    if(memc->Init(MEMC_VERSION, true)){
+    if(memc->Init(MEMC_VERSION, false)){
         printf("Memc init check fail\n");
         return -1;
     }

@@ -140,6 +140,16 @@ public:
   MEMC_ERROR SetContrastMode(bool enable);
 
   /**
+   * @brief 设置旋转模式
+   *
+   * @param rotate [IN] 设置旋转方向
+   * @return MEMC_ERROR::
+   *         - MEMC_NO_ERROR, success
+   *         - Other, fail
+   */
+  MEMC_ERROR SetRotateMode(MEMC_ROTATE_MODE rotate);
+
+  /**
    * @brief 获取MEMC_MODE处理模式信息
    *
    * @param src      [IN] 输入图像信息

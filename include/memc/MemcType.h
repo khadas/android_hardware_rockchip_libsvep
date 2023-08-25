@@ -20,7 +20,7 @@
 namespace android {
 
 #define MEMC_MAGIC 0x83991906
-#define MEMC_VERSION "Memc-1.4.0"
+#define MEMC_VERSION "Memc-1.4.2"
 // 用于使能MEMC输出
 #define MEMC_MODE_NAME               "persist.sys.memc.mode"
 // 用于应用动态关闭MEMC输出
@@ -29,6 +29,8 @@ namespace android {
 #define MEMC_CONTRAST_MODE_NAME      "persist.sys.memc.contrast_mode"
 // 用于配置osd单行模式
 #define MEMC_OSD_VIDEO_ONELINE_MODE  "persist.sys.memc.enable_oneline_osd"
+// 用于配置正常字幕模式到单行模式的等待时间，单位秒
+#define MEMC_OSD_VIDEO_ONELINE_WATI_SEC "persist.sys.svep.oneline_osd_wait_second"
 // 关闭 MEMC osd
 #define MEMC_OSD_DISABLE_MODE "persist.sys.svep.disable_memc_osd"
 // 用于输出单帧耗时
@@ -62,6 +64,7 @@ enum MEMC_BUFFER_MASK {
 
 enum MEMC_MODE {
     MEMC_UN_SUPPORT = 0,
+    MEMC_720P,
     MEMC_1080P,
     MEMC_4K,
 };
@@ -76,6 +79,16 @@ enum MEMC_OSD_MODE {
     MEMC_OSD_DISABLE = 0,
     MEMC_OSD_ENABLE_VIDEO,
     MEMC_OSD_ENABLE_VIDEO_ONELINE,
+};
+
+enum MEMC_ROTATE_MODE
+{
+    MEMC_ROTATE_0 = 0 << 0,
+    MEMC_ROTATE_90 = 1 << 1,
+    MEMC_ROTATE_180 = 1 << 2,
+    MEMC_ROTATE_270 = 1 << 3,
+    MEMC_REFLECT_X = 1 << 4,
+    MEMC_REFLECT_Y = 1 << 5,
 };
 
 class MemcRect{
