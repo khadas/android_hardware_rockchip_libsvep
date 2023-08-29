@@ -20,7 +20,7 @@
 namespace android {
 
 #define MEMC_MAGIC 0x83991906
-#define MEMC_VERSION "Memc-1.4.2"
+#define MEMC_VERSION "Memc-1.4.3"
 // 用于使能MEMC输出
 #define MEMC_MODE_NAME               "persist.sys.memc.mode"
 // 用于应用动态关闭MEMC输出
