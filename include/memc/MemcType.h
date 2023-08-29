@@ -44,6 +44,8 @@ namespace android {
 #define MEMC_VENDOR_AUTHOR_ID "ro.vendor.memc.vsid"
 // OSD string interface.
 #define MEMC_OSD_VIDEO_STR L"RKNPU-SVEP-MEMC"
+// One line OSD
+#define MEMC_OSD_VIDEO_ONELINE_STR L"AI"
 
 enum MEMC_ERROR {
     MEMC_NO_ERROR = 0,
