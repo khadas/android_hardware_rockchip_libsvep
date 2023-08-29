@@ -15,22 +15,21 @@
 
 // Verison info
 #define SR_MAGIC   0x83991906
-#define SR_VERSION "Sr-2.0.3"
+#define SR_VERSION "SR-2.0.5"
 
 #ifdef __ANDROID__
 // Android Property
 #define SR_VERSION_NAME "vendor.svep.version"
 // Release property interface.
-#define SR_MODE_NAME              "persist.sys.svep.mode"
-#define SR_RUNTIME_DISABLE_NAME   "sys.svep.runtime_disable"
-#define SR_ENHANCEMENT_RATE_NAME  "persist.sys.svep.enhancement_rate"
-#define SR_CONTRAST_MODE_NAME     "persist.sys.svep.contrast_mode"
-#define SR_CONTRAST_MODE_OFFSET   "persist.sys.svep.contrast_offset_ratio"
-#define SR_OSD_DISABLE_MODE       "persist.sys.svep.disable_sr_osd"
-#define SR_OSD_VIDEO_ONELINE_MODE "persist.sys.svep.enable_oneline_osd"
-#define SR_AVG_COST_TIME_NAME     "vendor.svep.avg_cost_time"
-#define SR_OSD_VIDEO_ONELINE_WATI_SEC \
-    "persist.sys.svep.oneline_osd_wait_second"`
+#define SR_MODE_NAME                  "persist.sys.svep.mode"
+#define SR_RUNTIME_DISABLE_NAME       "sys.svep.runtime_disable"
+#define SR_ENHANCEMENT_RATE_NAME      "persist.sys.svep.enhancement_rate"
+#define SR_CONTRAST_MODE_NAME         "persist.sys.svep.contrast_mode"
+#define SR_CONTRAST_MODE_OFFSET       "persist.sys.svep.contrast_offset_ratio"
+#define SR_OSD_DISABLE_MODE           "persist.sys.svep.disable_sr_osd"
+#define SR_OSD_VIDEO_ONELINE_MODE     "persist.sys.svep.enable_oneline_osd"
+#define SR_AVG_COST_TIME_NAME         "vendor.svep.avg_cost_time"
+#define SR_OSD_VIDEO_ONELINE_WATI_SEC "persist.sys.svep.oneline_osd_wait_second"
 
 // One line OSD
 #define SR_OSD_VIDEO_ONELINE_STR L"AI"
